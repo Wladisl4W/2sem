@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Регистрация пользователя</h1>
+        <form id="registrationForm" action="form.php" method="post">
+            <div class="input-group">
+                <label for="FIO">ФИО:</label>
+                <input type="text" id="FIO" name="FIO" placeholder="Иванов Иван Иванович" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="tel">Телефон:</label>
+                <input type="tel" id="tel" name="tel" placeholder="+79998887766" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="DR">Дата рождения:</label>
+                <input type="date" id="DR" name="DR" required>
+            </div>
+
+            <div class="input-group">
+                <p>Пол:</p>
+                <div class="radio-buttons">
+                    <label>
+                        <input type="radio" name="sex" value="0" checked> Мужской
+                    </label>
+                    <label>
+                        <input type="radio" name="sex" value="1"> Женский
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="lang">Языки программирования:</label>
+                <select id="lang" name="lang[]" multiple required size="11">
+                    <option value="1">Pascal</option>
+                    <option value="2">C</option>
+                    <option value="3">C++</option>
+                    <option value="4">JavaScript</option>
+                    <option value="5">PHP</option>
+                    <option value="6">Python</option>
+                    <option value="7">Java</option>
+                    <option value="8">Haskell</option>
+                    <option value="9">Clojure</option>
+                    <option value="10">Prolog</option>
+                    <option value="11">Scala</option>
+                </select>                
+            </div>
+
+            <div class="input-group">
+                <label for="bio">Биография:</label>
+                <textarea id="bio" name="bio" placeholder="Краткая информация о себе..." required></textarea>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="contract" name="contract" required>
+                <label for="contract">С контрактом ознакомлен(а)</label>
+            </div>
+
+            <button type="submit" class="submit-btn">Отправить</button>
+        </form>
+        <div class="response" id="response"></div>
+    </div>
+</body>
+</html>
