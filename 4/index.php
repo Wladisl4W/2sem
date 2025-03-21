@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Языки программирования
-    if (empty($_POST['lang'])) {
+    $validLangs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    if (empty($_POST['lang']) || array_diff($_POST['lang'], array_map('strval', $validLangs))) {
         setcookie('lang_error', 'Выберите хотя бы один язык.', 0, "/");
         $error = TRUE;
     } else {
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Если есть ошибки - редирект
     if ($error) {
-        header('Location: index.php');
+        header('Location: form.php');
         exit();
     }
 
@@ -95,12 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         setcookie('save', 'Успешно!', time() + 10, "/");
-        header('Location: index.php');
+        header('Location: form.php');
         exit();
 
     } catch (PDOException $e) {
         setcookie('DBerror', 'Ошибка БД: ' . $e->getMessage(), 0, "/");
-        header('Location: index.php');
+        header('Location: form.php');
         exit();
     }
 }
