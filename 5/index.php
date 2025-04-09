@@ -1,25 +1,19 @@
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
-    <link rel="stylesheet" href="style.css"> <!-- Подключение стилей -->
-</head>
-<body>
-    <?php include 'form.php'; ?>
-</body>
-</html>
-
-
 <?php
 session_start();
 header('Content-Type: text/html; charset=UTF-8');
 
-require_once 'db.php';
+// Включение файла с параметрами подключения
+include "../../../pass.php";
 
-
+try {
+    // Создание соединения с базой данных
+    $db = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
+        PDO::ATTR_PERSISTENT => true,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+} catch (PDOException $e) {
+    die("Ошибка подключения к базе данных: " . $e->getMessage());
+}
 
 // Инициализация переменных
 $messages = [];
