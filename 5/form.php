@@ -1,76 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Форма</title>
-    <style>
-        .error { color: red; }
-    </style>
-</head>
-<body>
+<?php
+if (!empty($messages)) {
+  print('<div class="messages">');
+  foreach ($messages as $message) {
+    print($message);
+  }
+  print('</div>');
+}
+?>
 
-<?php if (!empty($messages)): ?>
-    <div id="messages">
-        <?php foreach ($messages as $message): ?>
-            <p><?= $message ?></p>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+<form action="" method="POST" class="container">
+  <h1>Регистрация</h1>
+  <label for="fio">ФИО:</label>
+  <input type="text" name="fio" id="fio" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print htmlspecialchars($values['fio']); ?>" />
 
-<form action="" method="post">
-    <label for="FIO">ФИО:</label>
-    <input type="text" name="FIO" id="FIO" value="<?= isset($_POST['FIO']) ? htmlspecialchars($_POST['FIO']) : '' ?>">
-    <?php if (!empty($errors['FIO'])): ?>
-        <span class="error"><?= $errors['FIO'] ?></span>
-    <?php endif; ?>
-    <br><br>
+  <label for="tel">Телефон:</label>
+  <input type="text" name="tel" id="tel" <?php if ($errors['tel']) {print 'class="error"';} ?> value="<?php print htmlspecialchars($values['tel']); ?>" />
 
-    <label for="tel">Телефон:</label>
-    <input type="text" name="tel" id="tel" value="<?= isset($_POST['tel']) ? htmlspecialchars($_POST['tel']) : '' ?>">
-    <?php if (!empty($errors['tel'])): ?>
-        <span class="error"><?= $errors['tel'] ?></span>
-    <?php endif; ?>
-    <br><br>
+  <label for="email">Email:</label>
+  <input type="email" name="email" id="email" <?php if ($errors['email']) {print 'class="error"';} ?> value="<?php print htmlspecialchars($values['email']); ?>" />
 
-    <label for="email">Email:</label>
-    <input type="text" name="email" id="email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
-    <?php if (!empty($errors['email'])): ?>
-        <span class="error"><?= $errors['email'] ?></span>
-    <?php endif; ?>
-    <br><br>
+  <label for="dr">Дата рождения:</label>
+  <input type="date" name="dr" id="dr" <?php if ($errors['dr']) {print 'class="error"';} ?> value="<?php print htmlspecialchars($values['dr']); ?>" />
 
-    <label for="DR">Дата рождения:</label>
-    <input type="date" name="DR" id="DR" value="<?= isset($_POST['DR']) ? htmlspecialchars($_POST['DR']) : '' ?>">
-    <br><br>
+  <label for="sex">Пол:</label>
+  <select name="sex" id="sex" <?php if ($errors['sex']) {print 'class="error"';} ?>>
+    <option value="1" <?php if ($values['sex'] == 1) print 'selected'; ?>>Мужской</option>
+    <option value="2" <?php if ($values['sex'] == 2) print 'selected'; ?>>Женский</option>
+  </select>
 
-    <label>Пол:</label>
-    <input type="radio" name="sex" value="1" <?= isset($_POST['sex']) && $_POST['sex'] == 1 ? 'checked' : '' ?>> Мужской
-    <input type="radio" name="sex" value="0" <?= isset($_POST['sex']) && $_POST['sex'] == 0 ? 'checked' : '' ?>> Женский
-    <br><br>
+  <label for="bio">Биография:</label>
+  <textarea name="bio" id="bio" <?php if ($errors['bio']) {print 'class="error"';} ?>><?php print htmlspecialchars($values['bio']); ?></textarea>
 
-    <label for="bio">Биография:</label>
-    <textarea name="bio" id="bio"><?= isset($_POST['bio']) ? htmlspecialchars($_POST['bio']) : '' ?></textarea>
-    <br><br>
-
-    <label>Языки программирования:</label><br>
+  <label for="languages">Языки программирования:</label>
+  <select name="languages[]" id="languages" multiple>
     <?php
-    $stmt = $pdo->query("SELECT * FROM languages");
-    $languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($languages as $lang): ?>
-        <input type="checkbox" name="languages[]" value="<?= $lang['id_lang'] ?>" 
-               <?= isset($_POST['languages']) && in_array($lang['id_lang'], $_POST['languages']) ? 'checked' : '' ?>>
-        <?= $lang['lang'] ?><br>
-    <?php endforeach; ?>
-    <br>
+    $stmt = $db->query("SELECT * FROM languages");
+    while ($lang = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $selected = in_array($lang['id_lang'], $values['languages']) ? 'selected' : '';
+      echo "<option value='{$lang['id_lang']}' {$selected}>{$lang['lang']}</option>";
+    }
+    ?>
+  </select>
 
-    <input type="submit" value="Отправить">
+  <input type="submit" value="Отправить" />
 </form>
-
-<?php if (isset($_SESSION['user_id'])): ?>
-    <p><a href="logout.php">Выход</a></p>
-<?php else: ?>
-    <p><a href="login.php">Войти</a></p>
-<?php endif; ?>
-
-</body>
-</html>
