@@ -3,7 +3,19 @@ session_start();
 header('Content-Type: text/html; charset=UTF-8');
 
 // Включение файла с параметрами подключения
-include "../../../pass.php";
+if (!@include "../../../pass.php") {
+    die("Ошибка: файл pass.php не найден или не может быть загружен.");
+}
+
+// Переопределение переменных для совместимости с PDO
+$servername = 'localhost';       // Адрес сервера MySQL
+$username = $user;             // Используем $user из pass.php
+$password = $pass;             // Используем $pass из pass.php
+
+// Проверка наличия необходимых переменных
+if (!isset($servername) || !isset($username) || !isset($password) || !isset($dbname)) {
+    die("Ошибка: необходимые переменные для подключения к БД не определены.");
+}
 
 try {
     // Создание соединения с базой данных
@@ -14,6 +26,8 @@ try {
 } catch (PDOException $e) {
     die("Ошибка подключения к базе данных: " . $e->getMessage());
 }
+
+
 
 // Инициализация переменных
 $messages = [];
