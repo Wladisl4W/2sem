@@ -1,41 +1,42 @@
-CREATE TABLE applications (
-  id_app int(10) unsigned NOT NULL AUTO_INCREMENT,
-  FIO varchar(150) NOT NULL,
-  tel varchar(20) NOT NULL,
-  email varchar(80) NOT NULL,
-  DR DATE NOT NULL,
-  sex int(1) NOT NULL,
-  bio varchar(200),
-  PRIMARY KEY (id_app)
+-- Таблица для хранения заявок
+CREATE TABLE user_applications (
+  application_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  full_name VARCHAR(150) NOT NULL,
+  phone_number VARCHAR(20) NOT NULL,
+  email_address VARCHAR(80) NOT NULL,
+  birth_date DATE NOT NULL,
+  gender TINYINT(1) NOT NULL,
+  biography TEXT,
+  user_login VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  PRIMARY KEY (application_id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE languages (
-  id_lang int(2) unsigned NOT NULL AUTO_INCREMENT,
-  lang varchar(10) NOT NULL,
-  PRIMARY KEY (id_lang)
+-- Таблица для хранения языков программирования
+CREATE TABLE programming_languages (
+  language_id INT(2) UNSIGNED NOT NULL AUTO_INCREMENT,
+  language_name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (language_id)
 ) ENGINE = InnoDB;
 
-INSERT INTO languages (lang) VALUES ('Pascal');
-INSERT INTO languages (lang) VALUES ('C');
-INSERT INTO languages (lang) VALUES ('C++');
-INSERT INTO languages (lang) VALUES ('JavaScript');
-INSERT INTO languages (lang) VALUES ('PHP');
-INSERT INTO languages (lang) VALUES ('Python');
-INSERT INTO languages (lang) VALUES ('Java');
-INSERT INTO languages (lang) VALUES ('Haskell');
-INSERT INTO languages (lang) VALUES ('Clojure');
-INSERT INTO languages (lang) VALUES ('Prolog');
-INSERT INTO languages (lang) VALUES ('Scala');
+-- Предзаполнение таблицы языков программирования
+INSERT INTO programming_languages (language_name) VALUES 
+('Pascal'),
+('C'),
+('C++'),
+('JavaScript'),
+('PHP'),
+('Python'),
+('Java'),
+('Haskell'),
+('Clojure'),
+('Prolog'),
+('Scala');
 
-CREATE TABLE app_langs (
-  id_app int(10) unsigned NOT NULL,
-  id_lang int(2) unsigned NOT NULL,
-  FOREIGN KEY (id_app) REFERENCES applications (id_app),
-  FOREIGN KEY (id_lang) REFERENCES languages (id_lang)
+-- Таблица для связи заявок с языками программирования
+CREATE TABLE application_languages (
+  application_id INT(10) UNSIGNED NOT NULL,
+  language_id INT(2) UNSIGNED NOT NULL,
+  FOREIGN KEY (application_id) REFERENCES user_applications (application_id) ON DELETE CASCADE,
+  FOREIGN KEY (language_id) REFERENCES programming_languages (language_id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
-
-
-
-
-ALTER TABLE applications ADD COLUMN login VARCHAR(50) NOT NULL UNIQUE AFTER bio;
-ALTER TABLE applications ADD COLUMN password_hash VARCHAR(255) NOT NULL AFTER login;
