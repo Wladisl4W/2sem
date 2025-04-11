@@ -30,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         $errors['DR'] = 'Введите корректную дату рождения.';
     } else {
         $birthDate = strtotime($_POST['DR']);
+        $minDate = strtotime('1900-01-01');
         $currentDate = time();
-        $age = (int) date('Y', $currentDate) - (int) date('Y', $birthDate);
 
-        if ($birthDate > $currentDate) {
+        if ($birthDate < $minDate) {
+            $errors['DR'] = 'Дата рождения не может быть раньше 1900 года.';
+        } elseif ($birthDate > $currentDate) {
             $errors['DR'] = 'Дата рождения не может быть в будущем.';
-        } elseif ($age < 18 || $age > 120) {
-            $errors['DR'] = 'Возраст должен быть от 18 до 120 лет.';
         }
     }
 
