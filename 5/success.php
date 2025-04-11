@@ -26,15 +26,15 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
             border: 1px solid #444;
         }
         .card-header {
-            background-color: #007bff;
+            background-color: #d63384;
             color: #ffffff;
         }
         .btn-primary {
-            background-color: #007bff;
+            background-color: #d63384;
             border: none;
         }
         .btn-primary:hover {
-            background-color: #0056b3;
+            background-color: #b82c6e;
         }
     </style>
 </head>

@@ -32,26 +32,78 @@ try {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Редактирование данных</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .form-control, .form-select, .form-check-input {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #d63384;
+            box-shadow: 0 0 5px #d63384;
+        }
+        .btn-custom {
+            background-color: #d63384;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #b82c6e;
+        }
+        .alert {
+            background-color: #333;
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+    </style>
 </head>
 <body>
-    <h1>Редактирование данных</h1>
-    <?php if (!empty($success)): ?>
-        <p style="color: green;"><?= htmlspecialchars($success) ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <label>ФИО: <input type="text" name="FIO" value="<?= htmlspecialchars($data['full_name']) ?>" required></label><br>
-        <label>Телефон: <input type="tel" name="tel" value="<?= htmlspecialchars($data['phone_number']) ?>" required></label><br>
-        <label>Email: <input type="email" name="email" value="<?= htmlspecialchars($data['email_address']) ?>" required></label><br>
-        <label>Дата рождения: <input type="date" name="DR" value="<?= htmlspecialchars($data['birth_date']) ?>" required></label><br>
-        <label>Пол: 
-            <select name="sex" required>
-                <option value="0" <?= $data['gender'] == '0' ? 'selected' : '' ?>>Мужской</option>
-                <option value="1" <?= $data['gender'] == '1' ? 'selected' : '' ?>>Женский</option>
-            </select>
-        </label><br>
-        <label>Биография: <textarea name="bio" required><?= htmlspecialchars($data['biography']) ?></textarea></label><br>
-        <button type="submit">Сохранить</button>
-    </form>
+    <div class="container">
+        <h1 class="text-center">Редактирование данных</h1>
+        <?php if (!empty($success)): ?>
+            <div class="alert text-center"><?= htmlspecialchars($success) ?></div>
+        <?php endif; ?>
+        <form method="post" class="p-4 border rounded bg-dark">
+            <div class="mb-3">
+                <label class="form-label">ФИО:</label>
+                <input type="text" name="FIO" class="form-control" value="<?= htmlspecialchars($data['full_name']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Телефон:</label>
+                <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($data['phone_number']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($data['email_address']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Дата рождения:</label>
+                <input type="date" name="DR" class="form-control" value="<?= htmlspecialchars($data['birth_date']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Пол:</label>
+                <select name="sex" class="form-select">
+                    <option value="0" <?= $data['gender'] == '0' ? 'selected' : '' ?>>Мужской</option>
+                    <option value="1" <?= $data['gender'] == '1' ? 'selected' : '' ?>>Женский</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Биография:</label>
+                <textarea name="bio" class="form-control" rows="4" required><?= htmlspecialchars($data['biography']) ?></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom w-100">Сохранить</button>
+        </form>
+    </div>
 </body>
 </html>

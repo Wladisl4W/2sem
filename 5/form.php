@@ -32,20 +32,20 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
             border: 1px solid #444;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #666;
-            box-shadow: 0 0 5px #666;
+            border-color: #d63384;
+            box-shadow: 0 0 5px #d63384;
         }
         .form-check-input:checked {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #d63384;
+            border-color: #d63384;
         }
         .btn-custom {
-            background-color: #007bff;
+            background-color: #d63384;
             color: #ffffff;
             border: none;
         }
         .btn-custom:hover {
-            background-color: #0056b3;
+            background-color: #b82c6e;
         }
         .alert {
             background-color: #333;

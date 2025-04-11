@@ -48,15 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border: 1px solid #444;
         }
         .form-control:focus {
-            border-color: #666;
-            box-shadow: 0 0 5px #666;
+            border-color: #d63384;
+            box-shadow: 0 0 5px #d63384;
         }
         .btn-primary {
-            background-color: #007bff;
+            background-color: #d63384;
             border: none;
         }
         .btn-primary:hover {
-            background-color: #0056b3;
+            background-color: #b82c6e;
         }
         .btn-secondary {
             background-color: #444;
