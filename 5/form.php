@@ -22,8 +22,8 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
         body {
             background-color: #121212;
             color: #ffffff;
-            padding-top: 50px;
-            padding-bottom: 50px; /* Добавлен отступ снизу */
+            padding-top: 50px; /* Отступ сверху */
+            padding-bottom: 50px; /* Отступ снизу */
         }
         .container {
             max-width: 600px;
