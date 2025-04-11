@@ -41,6 +41,7 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         .card-body p {
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            color: #ffffff; /* Убедимся, что текст белый */
         }
         .btn-primary {
             background-color: #d63384;

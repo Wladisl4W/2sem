@@ -29,6 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $db->prepare("INSERT INTO users (user_login, password_hash, application_id) VALUES (?, ?, ?)");
         $stmt->execute([$login, $passwordHash, $applicationId]);
 
+        // Сохранение выбранных языков программирования
+        if (!empty($_POST['lang'])) {
+            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
+            foreach ($_POST['lang'] as $languageId) {
+                $stmt->execute([$applicationId, $languageId]);
+            }
+        }
+
         // Сохранение логина и пароля в сессии
         $_SESSION['login'] = $login;
         $_SESSION['password'] = $password;
