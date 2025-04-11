@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Сохраняем ошибки и значения полей в сессии
         $_SESSION['errors'] = $errors;
         $_SESSION['values'] = $_POST;
-        header('Location: form.php');
+        header('Location: form.php'); // Перенаправляем обратно на форму
         exit();
     }
 
