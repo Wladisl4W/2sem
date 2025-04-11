@@ -11,7 +11,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     // Валидация ФИО
-    if (empty($_POST['FIO']) || mb_strlen($_POST['FIO']) > 150) {
+    if (empty($_POST['FIO']) || strlen($_POST['FIO']) > 150) { // Заменено mb_strlen на strlen
         $errors['FIO'] = 'ФИО не должно быть пустым и не должно превышать 150 символов.';
     }
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     }
 
     // Валидация биографии
-    if (empty($_POST['bio']) || mb_strlen($_POST['bio']) > 1000) {
+    if (empty($_POST['bio']) || strlen($_POST['bio']) > 1000) { // Заменено mb_strlen на strlen
         $errors['bio'] = 'Биография не должна быть пустой и не должна превышать 1000 символов.';
     }
 
