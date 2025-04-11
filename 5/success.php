@@ -40,8 +40,11 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         }
         .card-body p {
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem; /* Уменьшенный отступ между текстом и значением */
             color: #ffffff; /* Убедимся, что текст белый */
+        }
+        .card-body .block-spacing {
+            margin-bottom: 1.5rem; /* Больший отступ между блоками */
         }
         .btn-primary {
             background-color: #d63384;
@@ -66,10 +69,14 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
                 Регистрация успешна!
             </div>
             <div class="card-body">
-                <p>Ваш логин:</p>
-                <p class="highlight"><?= htmlspecialchars($_SESSION['login']) ?></p>
-                <p>Ваш пароль:</p>
-                <p class="highlight"><?= htmlspecialchars($_SESSION['password']) ?></p>
+                <div class="block-spacing">
+                    <p>Ваш логин:</p>
+                    <p class="highlight"><?= htmlspecialchars($_SESSION['login']) ?></p>
+                </div>
+                <div class="block-spacing">
+                    <p>Ваш пароль:</p>
+                    <p class="highlight"><?= htmlspecialchars($_SESSION['password']) ?></p>
+                </div>
                 <a href="login.php" class="btn btn-primary w-100 mt-3">Войти</a>
             </div>
         </div>

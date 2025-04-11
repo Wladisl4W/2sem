@@ -99,12 +99,15 @@ try {
             background-color: #b82c6e;
         }
         .btn-logout {
-            background-color: #444;
+            background-color: #d9534f; /* Красный фон */
             color: #ffffff;
             border: none;
         }
         .btn-logout:hover {
-            background-color: #666;
+            background-color: #c9302c;
+        }
+        .logout-container {
+            margin-top: 20px; /* Отступ сверху для кнопки "Выйти" */
         }
         .alert {
             background-color: #333;
@@ -159,9 +162,11 @@ try {
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
         </form>
-        <form method="post">
-            <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
-        </form>
+        <div class="logout-container">
+            <form method="post">
+                <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

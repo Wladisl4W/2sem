@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #121212;
             color: #ffffff;
             padding-top: 50px;
-            padding-bottom: 50px;
+            padding-bottom: 50px; /* Добавлен отступ снизу */
         }
         .container {
             max-width: 400px;
