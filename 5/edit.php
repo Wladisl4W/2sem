@@ -57,7 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         $errors['lang'] = 'Выберите хотя бы один язык программирования.';
     }
 
-    if (empty($errors)) {
+    if (!empty($errors)) {
+        // Сохраняем введенные данные в сессии
+        $_SESSION['edit_values'] = $_POST;
+        $_SESSION['edit_errors'] = $errors;
+    } else {
         try {
             $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
                 PDO::ATTR_PERSISTENT => true,
@@ -81,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
             }
 
             $success = 'Данные успешно обновлены.';
+            unset($_SESSION['edit_values'], $_SESSION['edit_errors']); // Очищаем данные после успешного обновления
         } catch (PDOException $e) {
             die('Ошибка БД: ' . $e->getMessage());
         }
@@ -124,6 +129,12 @@ try {
     // Получение всех языков программирования
     $stmt = $db->query("SELECT language_id, language_name FROM programming_languages");
     $languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Если есть сохраненные данные из сессии, используем их
+    if (!empty($_SESSION['edit_values'])) {
+        $data = array_merge($data, $_SESSION['edit_values']);
+        $selectedLanguages = $_SESSION['edit_values']['lang'] ?? $selectedLanguages;
+    }
 } catch (PDOException $e) {
     die('Ошибка БД: ' . $e->getMessage());
 }
