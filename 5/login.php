@@ -29,17 +29,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ff66b2;
+        }
+        .container {
+            max-width: 400px;
+            margin-top: 100px;
+        }
+        .form-control, .btn {
+            background-color: #333;
+            color: #ff66b2;
+            border: 1px solid #ff66b2;
+        }
+        .form-control:focus {
+            border-color: #ff99cc;
+            box-shadow: 0 0 5px #ff99cc;
+        }
+        .btn-primary {
+            background-color: #ff66b2;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #ff99cc;
+        }
+        .btn-secondary {
+            background-color: #444;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Вход</h1>
-    <?php if (!empty($error)): ?>
-        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <label>Логин: <input type="text" name="login" required></label><br>
-        <label>Пароль: <input type="password" name="password" required></label><br>
-        <button type="submit">Войти</button>
-    </form>
+    <div class="container">
+        <h1 class="text-center">Вход</h1>
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+        <form method="post" class="border p-4 rounded bg-dark">
+            <div class="mb-3">
+                <label for="login" class="form-label">Логин:</label>
+                <input type="text" id="login" name="login" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <a href="form.php" class="btn btn-secondary">Регистрация</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
