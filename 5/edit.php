@@ -13,17 +13,46 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
+    // Получение ID заявки текущего пользователя
+    $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $applicationId = $stmt->fetchColumn();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = (SELECT application_id FROM users WHERE user_id = ?)");
+        // Обновление данных заявки
+        $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
         $stmt->execute([
-            $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $_SESSION['user_id']
+            $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $applicationId
         ]);
+
+        // Удаление старых языков
+        $stmt = $db->prepare("DELETE FROM application_languages WHERE application_id = ?");
+        $stmt->execute([$applicationId]);
+
+        // Добавление новых языков
+        if (!empty($_POST['lang'])) {
+            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
+            foreach ($_POST['lang'] as $languageId) {
+                $stmt->execute([$applicationId, $languageId]);
+            }
+        }
+
         $success = 'Данные успешно обновлены.';
     }
 
-    $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = (SELECT application_id FROM users WHERE user_id = ?)");
-    $stmt->execute([$_SESSION['user_id']]);
+    // Получение данных заявки
+    $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");
+    $stmt->execute([$applicationId]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Получение выбранных языков
+    $stmt = $db->prepare("SELECT language_id FROM application_languages WHERE application_id = ?");
+    $stmt->execute([$applicationId]);
+    $selectedLanguages = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Получение всех языков программирования
+    $stmt = $db->query("SELECT language_id, language_name FROM programming_languages");
+    $languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die('Ошибка БД: ' . $e->getMessage());
 }
@@ -97,6 +126,16 @@ try {
                     <option value="0" <?= $data['gender'] == '0' ? 'selected' : '' ?>>Мужской</option>
                     <option value="1" <?= $data['gender'] == '1' ? 'selected' : '' ?>>Женский</option>
                 </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Любимые языки программирования:</label>
+                <?php foreach ($languages as $language): ?>
+                    <div class="form-check">
+                        <input type="checkbox" name="lang[]" value="<?= $language['language_id'] ?>" class="form-check-input"
+                            <?= in_array($language['language_id'], $selectedLanguages) ? 'checked' : '' ?>>
+                        <label class="form-check-label"><?= htmlspecialchars($language['language_name']) ?></label>
+                    </div>
+                <?php endforeach; ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Биография:</label>
