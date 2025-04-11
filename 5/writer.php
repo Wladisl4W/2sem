@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    include __DIR__ . '../../../pass.php';
+    include __DIR__ . '/../../../pass.php';
 
     try {
         if (isset($_SESSION['numer'])) {
