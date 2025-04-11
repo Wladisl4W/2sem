@@ -11,8 +11,10 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     // Валидация ФИО
-    if (empty($_POST['FIO']) || strlen($_POST['FIO']) > 150) { // Заменено mb_strlen на strlen
+    if (empty($_POST['FIO']) || strlen($_POST['FIO']) > 150) {
         $errors['FIO'] = 'ФИО не должно быть пустым и не должно превышать 150 символов.';
+    } elseif (preg_match('/\d/', $_POST['FIO'])) {
+        $errors['FIO'] = 'ФИО не должно содержать цифры.';
     }
 
     // Валидация телефона
@@ -46,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     }
 
     // Валидация биографии
-    if (empty($_POST['bio']) || strlen($_POST['bio']) > 1000) { // Заменено mb_strlen на strlen
+    if (empty($_POST['bio']) || strlen($_POST['bio']) > 1000) {
         $errors['bio'] = 'Биография не должна быть пустой и не должна превышать 1000 символов.';
     }
 
@@ -102,6 +104,12 @@ try {
     $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $applicationId = $stmt->fetchColumn();
+
+    if (!$applicationId) {
+        die('Ошибка: заявка не найдена.');
+    }
+
+    $_SESSION['application_id'] = $applicationId;
 
     // Получение данных заявки
     $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");

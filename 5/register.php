@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Валидация ФИО
     if (empty($_POST['FIO']) || strlen($_POST['FIO']) > 150) {
         $errors['FIO'] = 'ФИО не должно быть пустым и не должно превышать 150 символов.';
+    } elseif (preg_match('/\d/', $_POST['FIO'])) {
+        $errors['FIO'] = 'ФИО не должно содержать цифры.';
     }
 
     // Валидация телефона
