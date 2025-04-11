@@ -20,37 +20,37 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #1a1a1a;
-            color: #ff66b2;
+            background-color: #121212;
+            color: #ffffff;
         }
         .container {
             max-width: 600px;
         }
         .form-control, .form-select, .form-check-input {
-            background-color: #333;
-            color: #ff66b2;
-            border: 1px solid #ff66b2;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #444;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #ff99cc;
-            box-shadow: 0 0 5px #ff99cc;
+            border-color: #666;
+            box-shadow: 0 0 5px #666;
         }
         .form-check-input:checked {
-            background-color: #ff66b2;
-            border-color: #ff66b2;
+            background-color: #007bff;
+            border-color: #007bff;
         }
         .btn-custom {
-            background-color: #ff66b2;
-            color: #1a1a1a;
+            background-color: #007bff;
+            color: #ffffff;
             border: none;
         }
         .btn-custom:hover {
-            background-color: #ff99cc;
+            background-color: #0056b3;
         }
         .alert {
-            color: #1a1a1a;
-            background-color: #ff99cc;
-            border-color: #ff66b2;
+            background-color: #333;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
         }
     </style>
 </head>

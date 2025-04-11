@@ -34,28 +34,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #1a1a1a;
-            color: #ff66b2;
+            background-color: #121212;
+            color: #ffffff;
         }
         .container {
             max-width: 400px;
             margin-top: 100px;
         }
         .form-control, .btn {
-            background-color: #333;
-            color: #ff66b2;
-            border: 1px solid #ff66b2;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #444;
         }
         .form-control:focus {
-            border-color: #ff99cc;
-            box-shadow: 0 0 5px #ff99cc;
+            border-color: #666;
+            box-shadow: 0 0 5px #666;
         }
         .btn-primary {
-            background-color: #ff66b2;
+            background-color: #007bff;
             border: none;
         }
         .btn-primary:hover {
-            background-color: #ff99cc;
+            background-color: #0056b3;
         }
         .btn-secondary {
             background-color: #444;
@@ -64,13 +64,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .btn-secondary:hover {
             background-color: #666;
         }
+        .alert {
+            background-color: #333;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center">Вход</h1>
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
+            <div class="alert text-center"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
         <form method="post" class="border p-4 rounded bg-dark">
             <div class="mb-3">
