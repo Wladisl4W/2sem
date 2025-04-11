@@ -156,7 +156,7 @@ try {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #121212; /* Чуть светлее фон сайта */
+            background-color: #121212;
             color: #ffffff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -165,13 +165,17 @@ try {
             max-width: 600px;
         }
         .form-control, .form-select, .form-check-input {
-            background-color: #2a2a2a; /* Чуть светлее ячейки формы */
+            background-color: #2a2a2a;
             color: #ffffff;
             border: 1px solid #444;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #e91e63; /* Розовый акцент */
+            border-color: #e91e63;
             box-shadow: 0 0 5px #e91e63;
+        }
+        .form-check-input:checked {
+            background-color: #e91e63;
+            border-color: #e91e63;
         }
         .btn-custom {
             background-color: #e91e63;
@@ -189,16 +193,18 @@ try {
         .btn-logout:hover {
             background-color: #c9302c;
         }
-        .logout-container {
-            margin-top: 20px;
-        }
-        .alert {
-            background-color: #333;
-            color: #4caf50;
+        .alert-success {
+            background-color: #4caf50;
+            color: #ffffff;
             border: 1px solid #4caf50;
         }
+        .alert-danger {
+            background-color: #333;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+        }
         .bg-dark {
-            background-color: #1e1e1e !important; /* Фон формы без оттенков */
+            background-color: #1e1e1e !important;
         }
     </style>
 </head>
@@ -206,10 +212,10 @@ try {
     <div class="container">
         <h1 class="text-center">Редактирование данных</h1>
         <?php if (!empty($success)): ?>
-            <div class="alert text-center"><?= htmlspecialchars($success) ?></div>
+            <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
         <?php if (!empty($_SESSION['edit_errors'])): ?>
-            <div class="alert text-center">
+            <div class="alert alert-danger text-center">
                 <?php foreach ($_SESSION['edit_errors'] as $error): ?>
                     <p><?= htmlspecialchars($error) ?></p>
                 <?php endforeach; ?>
@@ -264,6 +270,11 @@ try {
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
         </form>
+        <div class="logout-container">
+            <form method="post">
+                <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
+            </form>
+        </div>
     </div>
     <?php
     // Очищаем ошибки после отображения
