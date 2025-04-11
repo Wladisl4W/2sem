@@ -26,8 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     }
 
     // Валидация даты рождения
-    if (empty($_POST['DR']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['DR']) || strtotime($_POST['DR']) > time()) {
+    if (empty($_POST['DR']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['DR'])) {
         $errors['DR'] = 'Введите корректную дату рождения.';
+    } else {
+        $birthDate = strtotime($_POST['DR']);
+        $currentDate = time();
+        $age = (int) date('Y', $currentDate) - (int) date('Y', $birthDate);
+
+        if ($birthDate > $currentDate) {
+            $errors['DR'] = 'Дата рождения не может быть в будущем.';
+        } elseif ($age < 18 || $age > 120) {
+            $errors['DR'] = 'Возраст должен быть от 18 до 120 лет.';
+        }
     }
 
     // Валидация пола
