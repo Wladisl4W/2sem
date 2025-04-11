@@ -17,10 +17,10 @@ function randomPassword($length=12): string {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!preg_match('/^user[0-9]+$/', $_POST['login'])){
-        flash('Неверный логин или пароль (хи-хи)');
+        flash('Неверный логин или пароль');
     }
     else { 
-        include __DIR__.'/../../../pass.php';
+        include __DIR__.'../../../pass.php';
         $stmt=$db->prepare("SELECT id_user, pass FROM users WHERE login=?");
         $stmt->execute([$_POST['login']]);
         $row=$stmt->fetch(PDO::FETCH_NUM);
@@ -43,7 +43,7 @@ if(array_key_exists('register', $_GET)){
         flash('Вы уже зарегестрированы');
     } 
     else {
-        include __DIR__.'/../../../pass.php';
+        include __DIR__.'../../../pass.php';
         $stmt=$db->prepare("SELECT MAX(id_user) FROM users");
         $stmt->execute();
         $login=$stmt->fetch(PDO::FETCH_NUM)[0];

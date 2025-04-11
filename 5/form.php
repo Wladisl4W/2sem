@@ -12,7 +12,7 @@ foreach (array('fio', 'tel', 'email', 'dr', 'sex', 'bio') as $v) {
 setErrors('lang');
 unset($_SESSION['numer']);
 if (isset($_GET['numer'])){
-    require_once __DIR__.'/../../../pass.php';
+    require_once __DIR__.'../../../pass.php';
     $stmt=$db->prepare("SELECT id_app FROM app_users WHERE id_user=? AND id_app=?");
     $stmt->execute([$_SESSION['login'],$_GET['numer']]);
     $apps=$stmt->fetch(PDO::FETCH_NUM);
