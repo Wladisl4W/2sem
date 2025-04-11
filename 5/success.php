@@ -28,7 +28,7 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .card-header {
-            background-color: #d63384;
+            background-color: #4caf50; /* Зеленый фон */
             color: #ffffff;
             text-align: center;
             font-size: 1.5rem;
@@ -40,11 +40,11 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         }
         .card-body p {
             font-size: 1.2rem;
-            margin-bottom: 0.5rem; /* Уменьшенный отступ между текстом и значением */
-            color: #ffffff; /* Убедимся, что текст белый */
+            margin-bottom: 0.3rem; /* Уменьшенный отступ между текстом и значением */
+            color: #ffffff;
         }
         .card-body .block-spacing {
-            margin-bottom: 1.5rem; /* Больший отступ между блоками */
+            margin-bottom: 1rem; /* Больший отступ между блоками */
         }
         .btn-primary {
             background-color: #d63384;
