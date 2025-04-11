@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
 
+        // Проверка логина и пароля в таблице users
         $stmt = $db->prepare("SELECT user_id, password_hash FROM users WHERE user_login = ?");
         $stmt->execute([$_POST['login']]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

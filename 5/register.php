@@ -16,12 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password = bin2hex(random_bytes(4));
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        // Сохранение данных формы
+        // Сохранение данных формы в таблицу user_applications
         $stmt = $db->prepare("INSERT INTO user_applications (full_name, phone_number, email_address, birth_date, gender, biography, user_login, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $login, $passwordHash
         ]);
 
+        // Получение ID заявки
+        $applicationId = $db->lastInsertId();
+
+        // Сохранение данных в таблицу users
+        $stmt = $db->prepare("INSERT INTO users (user_login, password_hash, application_id) VALUES (?, ?, ?)");
+        $stmt->execute([$login, $passwordHash, $applicationId]);
+
+        // Сохранение логина и пароля в сессии
         $_SESSION['login'] = $login;
         $_SESSION['password'] = $password;
 
