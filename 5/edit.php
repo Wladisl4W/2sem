@@ -7,6 +7,14 @@ if (empty($_SESSION['user_id'])) {
 
 include("../../../pass.php");
 
+function getEditValue($name) {
+    return $_SESSION['edit_values'][$name] ?? '';
+}
+
+function getEditError($name) {
+    return $_SESSION['edit_errors'][$name] ?? '';
+}
+
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
@@ -200,9 +208,9 @@ try {
         <?php if (!empty($success)): ?>
             <div class="alert text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
-        <?php if (!empty($errors)): ?>
+        <?php if (!empty($_SESSION['edit_errors'])): ?>
             <div class="alert text-center">
-                <?php foreach ($errors as $error): ?>
+                <?php foreach ($_SESSION['edit_errors'] as $error): ?>
                     <p><?= htmlspecialchars($error) ?></p>
                 <?php endforeach; ?>
             </div>
@@ -210,26 +218,31 @@ try {
         <form method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
                 <label class="form-label">ФИО:</label>
-                <input type="text" name="FIO" class="form-control" value="<?= htmlspecialchars($data['full_name']) ?>" required>
+                <input type="text" name="FIO" class="form-control <?= getEditError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('FIO') ?: $data['full_name']) ?>" required>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('FIO')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Телефон:</label>
-                <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($data['phone_number']) ?>" required>
+                <input type="tel" name="tel" class="form-control <?= getEditError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('tel') ?: $data['phone_number']) ?>" required>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('tel')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($data['email_address']) ?>" required>
+                <input type="email" name="email" class="form-control <?= getEditError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('email') ?: $data['email_address']) ?>" required>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('email')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Дата рождения:</label>
-                <input type="date" name="DR" class="form-control" value="<?= htmlspecialchars($data['birth_date']) ?>" required>
+                <input type="date" name="DR" class="form-control <?= getEditError('DR') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('DR') ?: $data['birth_date']) ?>" required>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('DR')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Пол:</label>
-                <select name="sex" class="form-select">
-                    <option value="0" <?= $data['gender'] == '0' ? 'selected' : '' ?>>Мужской</option>
-                    <option value="1" <?= $data['gender'] == '1' ? 'selected' : '' ?>>Женский</option>
+                <select name="sex" class="form-select <?= getEditError('sex') ? 'is-invalid' : '' ?>">
+                    <option value="0" <?= (getEditValue('sex') ?: $data['gender']) == '0' ? 'selected' : '' ?>>Мужской</option>
+                    <option value="1" <?= (getEditValue('sex') ?: $data['gender']) == '1' ? 'selected' : '' ?>>Женский</option>
                 </select>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('sex')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Любимые языки программирования:</label>
@@ -240,18 +253,21 @@ try {
                         <label class="form-check-label"><?= htmlspecialchars($language['language_name']) ?></label>
                     </div>
                 <?php endforeach; ?>
+                <?php if (getEditError('lang')): ?>
+                    <div class="text-danger"><?= htmlspecialchars(getEditError('lang')) ?></div>
+                <?php endif; ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Биография:</label>
-                <textarea name="bio" class="form-control" rows="4" required><?= htmlspecialchars($data['biography']) ?></textarea>
+                <textarea name="bio" class="form-control <?= getEditError('bio') ? 'is-invalid' : '' ?>" rows="4"><?= htmlspecialchars(getEditValue('bio') ?: $data['biography']) ?></textarea>
+                <div class="invalid-feedback"><?= htmlspecialchars(getEditError('bio')) ?></div>
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
         </form>
-        <div class="logout-container">
-            <form method="post">
-                <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
-            </form>
-        </div>
     </div>
+    <?php
+    // Очищаем ошибки после отображения
+    unset($_SESSION['edit_errors']);
+    ?>
 </body>
 </html>
