@@ -73,7 +73,7 @@ try {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #0d0d0d; /* Ещё более тёмный фон */
+            background-color: #0b0b0b; /* Ещё более тёмный фон */
             color: #ffffff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -82,7 +82,7 @@ try {
             max-width: 600px;
         }
         .form-control, .form-select, .form-check-input {
-            background-color: #1a1a1a; /* Тёмный цвет формы с минимальным оттенком розового */
+            background-color: #141414; /* Ещё более тёмный цвет формы */
             color: #ffffff;
             border: 1px solid #444;
         }
@@ -99,7 +99,7 @@ try {
             background-color: #b82c6e;
         }
         .btn-logout {
-            background-color: #d9534f; /* Красный фон */
+            background-color: #d9534f;
             color: #ffffff;
             border: none;
         }
@@ -107,7 +107,7 @@ try {
             background-color: #c9302c;
         }
         .logout-container {
-            margin-top: 20px; /* Отступ сверху для кнопки "Выйти" */
+            margin-top: 20px;
         }
         .alert {
             background-color: #333;

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #0d0d0d; /* Ещё более тёмный фон */
+            background-color: #0b0b0b; /* Ещё более тёмный фон */
             color: #ffffff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             max-width: 400px;
         }
         .form-control, .btn {
-            background-color: #1a1a1a; /* Тёмный цвет формы с минимальным оттенком розового */
+            background-color: #141414; /* Ещё более тёмный цвет формы */
             color: #ffffff;
             border: 1px solid #444;
         }
