@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         body {
             background-color: #121212;
             color: #ffffff;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
         .container {
             max-width: 400px;

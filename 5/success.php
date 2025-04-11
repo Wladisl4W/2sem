@@ -28,6 +28,14 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         .card-header {
             background-color: #d63384;
             color: #ffffff;
+            text-align: center;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .card-body p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
         }
         .btn-primary {
             background-color: #d63384;
@@ -41,15 +49,15 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-header text-center">
+            <div class="card-header">
                 <h2>Регистрация успешна!</h2>
             </div>
             <div class="card-body">
-                <p>Ваш логин: <strong><?= htmlspecialchars($_SESSION['login']) ?></strong></p>
-                <p>Ваш пароль: <strong><?= htmlspecialchars($_SESSION['password']) ?></strong></p>
-                <div class="text-center">
-                    <a href="login.php" class="btn btn-primary">Войти</a>
-                </div>
+                <p>Ваш логин:</p>
+                <p><strong style="color: #ffffff;"><?= htmlspecialchars($_SESSION['login']) ?></strong></p>
+                <p>Ваш пароль:</p>
+                <p><strong style="color: #ffffff;"><?= htmlspecialchars($_SESSION['password']) ?></strong></p>
+                <a href="login.php" class="btn btn-primary w-100">Войти</a>
             </div>
         </div>
     </div>

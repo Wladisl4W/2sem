@@ -13,12 +13,19 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
+    // Обработка выхода из аккаунта
+    if (isset($_POST['logout'])) {
+        session_destroy();
+        header('Location: login.php');
+        exit();
+    }
+
     // Получение ID заявки текущего пользователя
     $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $applicationId = $stmt->fetchColumn();
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         // Обновление данных заявки
         $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
         $stmt->execute([
@@ -68,10 +75,11 @@ try {
         body {
             background-color: #121212;
             color: #ffffff;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
         .container {
             max-width: 600px;
-            margin-top: 50px;
         }
         .form-control, .form-select, .form-check-input {
             background-color: #1e1e1e;
@@ -89,6 +97,14 @@ try {
         }
         .btn-custom:hover {
             background-color: #b82c6e;
+        }
+        .btn-logout {
+            background-color: #444;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-logout:hover {
+            background-color: #666;
         }
         .alert {
             background-color: #333;
@@ -141,7 +157,10 @@ try {
                 <label class="form-label">Биография:</label>
                 <textarea name="bio" class="form-control" rows="4" required><?= htmlspecialchars($data['biography']) ?></textarea>
             </div>
-            <button type="submit" class="btn btn-custom w-100">Сохранить</button>
+            <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
+        </form>
+        <form method="post">
+            <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
         </form>
     </div>
 </body>
