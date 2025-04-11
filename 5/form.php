@@ -20,16 +20,16 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #121212;
+            background-color: #0d0d0d; /* Ещё более тёмный фон */
             color: #ffffff;
-            padding-top: 50px; /* Отступ сверху */
-            padding-bottom: 50px; /* Отступ снизу */
+            padding-top: 20px;
+            padding-bottom: 50px;
         }
         .container {
             max-width: 600px;
         }
         .form-control, .form-select, .form-check-input {
-            background-color: #1e1e1e;
+            background-color: #1a1a1a; /* Тёмный цвет формы с минимальным оттенком розового */
             color: #ffffff;
             border: 1px solid #444;
         }
