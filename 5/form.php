@@ -20,39 +20,42 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #0b0b0b; /* Ещё более тёмный фон */
+            background-color: #121212; /* Чуть светлее фон сайта */
             color: #ffffff;
-            padding-top: 10px; /* Ещё меньше отступ сверху */
+            padding-top: 0; /* Убрали отступ сверху */
             padding-bottom: 50px;
         }
         .container {
             max-width: 600px;
         }
         .form-control, .form-select, .form-check-input {
-            background-color: #141414; /* Ещё более тёмный цвет формы */
+            background-color: #2a2a2a; /* Чуть светлее ячейки формы */
             color: #ffffff;
             border: 1px solid #444;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #d63384;
-            box-shadow: 0 0 5px #d63384;
+            border-color: #e91e63; /* Розовый акцент */
+            box-shadow: 0 0 5px #e91e63;
         }
         .form-check-input:checked {
-            background-color: #d63384;
-            border-color: #d63384;
+            background-color: #e91e63;
+            border-color: #e91e63;
         }
         .btn-custom {
-            background-color: #d63384;
+            background-color: #e91e63;
             color: #ffffff;
             border: none;
         }
         .btn-custom:hover {
-            background-color: #b82c6e;
+            background-color: #c2185b;
         }
         .alert {
             background-color: #333;
             color: #ff4d4d;
             border: 1px solid #ff4d4d;
+        }
+        .bg-dark {
+            background-color: #1e1e1e !important; /* Фон формы без оттенков */
         }
     </style>
 </head>

@@ -14,7 +14,7 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #0b0b0b; /* Ещё более тёмный фон */
+            background-color: #121212; /* Чуть светлее фон сайта */
             color: #ffffff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -23,12 +23,12 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
             max-width: 400px;
         }
         .card {
-            background-color: #141414; /* Ещё более тёмный цвет формы */
+            background-color: #1e1e1e; /* Фон формы без оттенков */
             border: 1px solid #444;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .card-header {
-            background-color: #4caf50; /* Зеленый фон */
+            background-color: #4caf50;
             color: #ffffff;
             text-align: center;
             font-size: 1.5rem;
@@ -40,20 +40,20 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         }
         .card-body p {
             font-size: 1.2rem;
-            margin-bottom: 0.3rem; /* Уменьшенный отступ между текстом и значением */
+            margin-bottom: 0.3rem;
             color: #ffffff;
         }
         .card-body .block-spacing {
-            margin-bottom: 1rem; /* Больший отступ между блоками */
+            margin-bottom: 1rem;
         }
         .btn-primary {
-            background-color: #d63384;
+            background-color: #e91e63;
             border: none;
             font-size: 1rem;
             padding: 10px 20px;
         }
         .btn-primary:hover {
-            background-color: #b82c6e;
+            background-color: #c2185b;
         }
         .highlight {
             color: #ffffff;
