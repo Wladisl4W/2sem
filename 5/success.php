@@ -16,22 +16,27 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         body {
             background-color: #121212;
             color: #ffffff;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
         .container {
             max-width: 400px;
-            margin-top: 100px;
         }
         .card {
             background-color: #1e1e1e;
             border: 1px solid #444;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .card-header {
             background-color: #d63384;
             color: #ffffff;
             text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
         .card-body {
             text-align: center;
+            padding: 20px;
         }
         .card-body p {
             font-size: 1.2rem;
@@ -40,9 +45,16 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
         .btn-primary {
             background-color: #d63384;
             border: none;
+            font-size: 1rem;
+            padding: 10px 20px;
         }
         .btn-primary:hover {
             background-color: #b82c6e;
+        }
+        .highlight {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.3rem;
         }
     </style>
 </head>
@@ -50,14 +62,14 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h2>Регистрация успешна!</h2>
+                Регистрация успешна!
             </div>
             <div class="card-body">
                 <p>Ваш логин:</p>
-                <p><strong style="color: #ffffff;"><?= htmlspecialchars($_SESSION['login']) ?></strong></p>
+                <p class="highlight"><?= htmlspecialchars($_SESSION['login']) ?></p>
                 <p>Ваш пароль:</p>
-                <p><strong style="color: #ffffff;"><?= htmlspecialchars($_SESSION['password']) ?></strong></p>
-                <a href="login.php" class="btn btn-primary w-100">Войти</a>
+                <p class="highlight"><?= htmlspecialchars($_SESSION['password']) ?></p>
+                <a href="login.php" class="btn btn-primary w-100 mt-3">Войти</a>
             </div>
         </div>
     </div>
