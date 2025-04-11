@@ -40,3 +40,13 @@ CREATE TABLE application_languages (
   FOREIGN KEY (application_id) REFERENCES user_applications (application_id) ON DELETE CASCADE,
   FOREIGN KEY (language_id) REFERENCES programming_languages (language_id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
+
+-- Таблица для хранения пользователей
+CREATE TABLE users (
+  user_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_login VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  application_id INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (user_id),
+  FOREIGN KEY (application_id) REFERENCES user_applications (application_id) ON DELETE CASCADE
+) ENGINE = InnoDB;
