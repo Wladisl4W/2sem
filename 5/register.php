@@ -42,46 +42,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['lang'] = 'Выберите хотя бы один язык программирования.';
     }
 
-    if (empty($errors)) {
-        try {
-            $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]);
+    if (!empty($errors)) {
+        // Сохраняем ошибки и значения полей в сессии
+        $_SESSION['errors'] = $errors;
+        $_SESSION['values'] = $_POST;
+        header('Location: form.php');
+        exit();
+    }
 
-            // Генерация логина и пароля
-            $login = 'user_' . bin2hex(random_bytes(4));
-            $password = bin2hex(random_bytes(4));
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    try {
+        $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
 
-            // Сохранение данных формы в таблицу user_applications
-            $stmt = $db->prepare("INSERT INTO user_applications (full_name, phone_number, email_address, birth_date, gender, biography, user_login, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([
-                $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $login, $passwordHash
-            ]);
+        // Генерация логина и пароля
+        $login = 'user_' . bin2hex(random_bytes(4));
+        $password = bin2hex(random_bytes(4));
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Получение ID заявки
-            $applicationId = $db->lastInsertId();
+        // Сохранение данных формы в таблицу user_applications
+        $stmt = $db->prepare("INSERT INTO user_applications (full_name, phone_number, email_address, birth_date, gender, biography, user_login, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([
+            $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $login, $passwordHash
+        ]);
 
-            // Сохранение данных в таблицу users
-            $stmt = $db->prepare("INSERT INTO users (user_login, password_hash, application_id) VALUES (?, ?, ?)");
-            $stmt->execute([$login, $passwordHash, $applicationId]);
+        // Получение ID заявки
+        $applicationId = $db->lastInsertId();
 
-            // Сохранение выбранных языков программирования
-            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
-            foreach ($_POST['lang'] as $languageId) {
-                $stmt->execute([$applicationId, $languageId]);
-            }
+        // Сохранение данных в таблицу users
+        $stmt = $db->prepare("INSERT INTO users (user_login, password_hash, application_id) VALUES (?, ?, ?)");
+        $stmt->execute([$login, $passwordHash, $applicationId]);
 
-            // Сохранение логина и пароля в сессии
-            $_SESSION['login'] = $login;
-            $_SESSION['password'] = $password;
-
-            header('Location: success.php');
-            exit();
-        } catch (PDOException $e) {
-            echo 'Ошибка БД: ' . $e->getMessage();
+        // Сохранение выбранных языков программирования
+        $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
+        foreach ($_POST['lang'] as $languageId) {
+            $stmt->execute([$applicationId, $languageId]);
         }
+
+        // Сохранение логина и пароля в сессии
+        $_SESSION['login'] = $login;
+        $_SESSION['password'] = $password;
+
+        header('Location: success.php');
+        exit();
+    } catch (PDOException $e) {
+        echo 'Ошибка БД: ' . $e->getMessage();
     }
 }
 ?>

@@ -2,14 +2,14 @@
 header('Content-Type: text/html; charset=UTF-8');
 
 function getValue($name) {
-    return $_COOKIE[$name . '_value'] ?? '';
+    return $_SESSION['values'][$name] ?? '';
 }
 
 function getError($name) {
-    return $_COOKIE[$name . '_error'] ?? '';
+    return $_SESSION['errors'][$name] ?? '';
 }
 
-$languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']) : [];
+$languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : [];
 ?>
 
 <!DOCTYPE html>
@@ -66,26 +66,26 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
         <form action="register.php" method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
                 <label class="form-label">ФИО:</label>
-                <input type="text" name="FIO" class="form-control <?= getError('fio') ? 'is-invalid' : '' ?>" value="<?= getValue('fio') ?>">
-                <div class="invalid-feedback"><?= getError('fio') ?></div>
+                <input type="text" name="FIO" class="form-control <?= getError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('FIO')) ?>">
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('FIO')) ?></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Телефон:</label>
-                <input type="tel" name="tel" class="form-control <?= getError('tel') ? 'is-invalid' : '' ?>" value="<?= getValue('tel') ?>">
-                <div class="invalid-feedback"><?= getError('tel') ?></div>
+                <input type="tel" name="tel" class="form-control <?= getError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('tel')) ?>">
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('tel')) ?></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control <?= getError('email') ? 'is-invalid' : '' ?>" value="<?= getValue('email') ?>">
-                <div class="invalid-feedback"><?= getError('email') ?></div>
+                <input type="email" name="email" class="form-control <?= getError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('email')) ?>">
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('email')) ?></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Дата рождения:</label>
-                <input type="date" name="DR" class="form-control <?= getError('dr') ? 'is-invalid' : '' ?>" value="<?= getValue('dr') ?>">
-                <div class="invalid-feedback"><?= getError('dr') ?></div>
+                <input type="date" name="DR" class="form-control <?= getError('DR') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('DR')) ?>">
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('DR')) ?></div>
             </div>
 
             <div class="mb-3">
@@ -94,7 +94,7 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
                     <option value="0" <?= getValue('sex') == '0' ? 'selected' : '' ?>>Мужской</option>
                     <option value="1" <?= getValue('sex') == '1' ? 'selected' : '' ?>>Женский</option>
                 </select>
-                <div class="invalid-feedback"><?= getError('sex') ?></div>
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('sex')) ?></div>
             </div>
 
             <div class="mb-3">
@@ -114,18 +114,22 @@ $languages = isset($_COOKIE['lang_value']) ? explode('|', $_COOKIE['lang_value']
                     </div>
                 <?php endforeach; ?>
                 <?php if (getError('lang')): ?>
-                    <div class="text-danger"><?= getError('lang') ?></div>
+                    <div class="text-danger"><?= htmlspecialchars(getError('lang')) ?></div>
                 <?php endif; ?>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Биография:</label>
-                <textarea name="bio" class="form-control <?= getError('bio') ? 'is-invalid' : '' ?>" rows="4"><?= getValue('bio') ?></textarea>
-                <div class="invalid-feedback"><?= getError('bio') ?></div>
+                <textarea name="bio" class="form-control <?= getError('bio') ? 'is-invalid' : '' ?>" rows="4"><?= htmlspecialchars(getValue('bio')) ?></textarea>
+                <div class="invalid-feedback"><?= htmlspecialchars(getError('bio')) ?></div>
             </div>
 
             <button type="submit" class="btn btn-custom w-100">Отправить</button>
         </form>
     </div>
+    <?php
+    // Очищаем ошибки и значения после отображения
+    unset($_SESSION['errors'], $_SESSION['values']);
+    ?>
 </body>
 </html>
