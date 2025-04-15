@@ -270,18 +270,8 @@ try {
                 <div class="invalid-feedback"><?= htmlspecialchars(getEditError('bio')) ?></div>
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
+            <button type="submit" name="logout" class="btn btn-danger w-100">Выйти</button>
         </form>
-        <table class="table table-dark table-bordered mt-5">
-            <tbody>
-                <tr>
-                    <td class="text-center">
-                        <form method="post">
-                            <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <?php
     // Очищаем ошибки после отображения
