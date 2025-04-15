@@ -22,7 +22,7 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-wide">
         <div class="header-box">Регистрация</div>
 
         <form action="register.php" method="post" class="p-4 border rounded bg-dark">

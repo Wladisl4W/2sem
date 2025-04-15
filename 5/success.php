@@ -15,7 +15,7 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-narrow">
         <div class="card">
             <div class="card-header">
                 Регистрация успешна!

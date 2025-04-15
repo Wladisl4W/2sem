@@ -142,7 +142,7 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-wide">
         <div class="header-box">Редактирование данных</div>
         <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>

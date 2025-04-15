@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-narrow">
         <div class="header-box">Вход</div>
         <?php if (!empty($error)): ?>
             <div class="alert text-center"><?= htmlspecialchars($error) ?></div>
