@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         // Сохраняем введенные данные в сессии
         $_SESSION['edit_values'] = $_POST;
         $_SESSION['edit_errors'] = $errors;
-        $success = null; // Убираем сообщение об успехе при наличии ошибок
+        unset($success); // Убираем сообщение об успехе при наличии ошибок
     } else {
         try {
             $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
