@@ -6,6 +6,7 @@ if (empty($_SESSION['user_id'])) {
 }
 
 include("../../../pass.php");
+include("../validation.php");
 
 function getEditValue($name) {
     return $_SESSION['edit_values'][$name] ?? '';
@@ -19,45 +20,7 @@ $errors = [];
 $success = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
-    if (empty($_POST['FIO']) || strlen($_POST['FIO']) > 150) {
-        $errors['FIO'] = 'ФИО не должно быть пустым и не должно превышать 150 символов.';
-    } elseif (preg_match('/\d/', $_POST['FIO'])) {
-        $errors['FIO'] = 'ФИО не должно содержать цифры.';
-    }
-
-    if (empty($_POST['tel']) || !preg_match('/^\+?[0-9]{10,15}$/', $_POST['tel'])) {
-        $errors['tel'] = 'Введите корректный номер телефона.';
-    }
-
-    if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'Введите корректный email.';
-    }
-
-    if (empty($_POST['DR']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['DR'])) {
-        $errors['DR'] = 'Введите корректную дату рождения.';
-    } else {
-        $birthDate = strtotime($_POST['DR']);
-        $minDate = strtotime('1900-01-01');
-        $currentDate = time();
-
-        if ($birthDate < $minDate) {
-            $errors['DR'] = 'Дата рождения не может быть раньше 1900 года.';
-        } elseif ($birthDate > $currentDate) {
-            $errors['DR'] = 'Дата рождения не может быть в будущем.';
-        }
-    }
-
-    if (!isset($_POST['sex']) || !in_array($_POST['sex'], ['0', '1'])) {
-        $errors['sex'] = 'Выберите корректный пол.';
-    }
-
-    if (empty($_POST['bio']) || strlen($_POST['bio']) > 1000) {
-        $errors['bio'] = 'Биография не должна быть пустой и не должна превышать 1000 символов.';
-    }
-
-    if (empty($_POST['lang']) || !is_array($_POST['lang'])) {
-        $errors['lang'] = 'Выберите хотя бы один язык программирования.';
-    }
+    $errors = validateFormData($_POST);
 
     if (!empty($errors)) {
         $_SESSION['edit_values'] = $_POST;
