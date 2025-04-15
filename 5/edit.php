@@ -16,6 +16,7 @@ function getEditError($name) {
 }
 
 $errors = [];
+$success = null; // Инициализируем переменную $success
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     // Валидация ФИО
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         // Сохраняем введенные данные в сессии
         $_SESSION['edit_values'] = $_POST;
         $_SESSION['edit_errors'] = $errors;
-        unset($success); // Убираем сообщение об успехе при наличии ошибок
+        $success = null; // Убираем сообщение об успехе при наличии ошибок
     } else {
         try {
             $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
@@ -212,7 +213,7 @@ try {
 <body>
     <div class="container">
         <h1 class="text-center">Редактирование данных</h1>
-        <?php if (!empty($success) && empty($_SESSION['edit_errors'])): ?>
+        <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
         <?php if (!empty($_SESSION['edit_errors'])): ?>
