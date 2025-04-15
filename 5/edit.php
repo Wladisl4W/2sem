@@ -208,11 +208,18 @@ try {
         .bg-dark {
             background-color: #1e1e1e !important;
         }
+        .header-box {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #e91e63; /* Розовая обводка */
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Редактирование данных</h1>
+        <h1 class="text-center header-box">Редактирование данных</h1>
         <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
