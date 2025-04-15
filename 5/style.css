@@ -18,10 +18,18 @@ body {
     max-width: 650px; /* Ширина для form.php и edit.php */
 }
 
+form {
+    max-width: 100%; /* Формы занимают всю ширину контейнера */
+    width: 100%; /* Устанавливаем ширину формы */
+    margin: 0 auto; /* Центрируем форму внутри контейнера */
+}
+
 .form-control, .form-select, .form-check-input {
     background-color: #2a2a2a;
     color: #ffffff;
     border: 1px solid #444;
+    width: 100%; /* Поля ввода занимают всю ширину формы */
+    box-sizing: border-box; /* Учитываем отступы и границы */
 }
 
 .form-control:focus, .form-select:focus {
