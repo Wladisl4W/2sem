@@ -39,6 +39,21 @@ form {
     box-shadow: 0 0 5px #e91e63;
 }
 
+.form-check {
+    display: flex;
+    align-items: center; /* Выравниваем чекбоксы и текст по вертикали */
+    margin-bottom: 10px; /* Отступ между строками */
+}
+
+.form-check-input {
+    width: auto; /* Убираем растяжение чекбоксов */
+    margin-right: 10px; /* Отступ между чекбоксом и текстом */
+}
+
+.form-check-label {
+    margin: 0; /* Убираем лишние отступы у текста */
+}
+
 .form-check-input:checked {
     background-color: #e91e63;
     border-color: #e91e63;
