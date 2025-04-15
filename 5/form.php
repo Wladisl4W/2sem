@@ -19,55 +19,7 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
     <meta charset="UTF-8">
     <title>Регистрация</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #121212; /* Чуть светлее фон сайта */
-            color: #ffffff;
-            padding-top: 0; /* Убрали отступ сверху */
-            padding-bottom: 50px;
-        }
-        .container {
-            max-width: 600px;
-        }
-        .form-control, .form-select, .form-check-input {
-            background-color: #2a2a2a; /* Чуть светлее ячейки формы */
-            color: #ffffff;
-            border: 1px solid #444;
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #e91e63; /* Розовый акцент */
-            box-shadow: 0 0 5px #e91e63;
-        }
-        .form-check-input:checked {
-            background-color: #e91e63;
-            border-color: #e91e63;
-        }
-        .btn-custom {
-            background-color: #e91e63;
-            color: #ffffff;
-            border: none;
-        }
-        .btn-custom:hover {
-            background-color: #c2185b;
-        }
-        .alert {
-            background-color: #333;
-            color: #ff4d4d;
-            border: 1px solid #ff4d4d;
-        }
-        .bg-dark {
-            background-color: #1e1e1e !important; /* Фон формы без оттенков */
-        }
-        .header-box {
-            background-color: #e91e63; /* Розовый фон */
-            color: #ffffff; /* Белый текст */
-            text-align: center; /* Центрирование текста */
-            padding: 10px 0; /* Отступы сверху и снизу */
-            border-radius: 5px; /* Закругленные углы */
-            margin-bottom: 20px; /* Отступ снизу */
-            width: 100%; /* Растягиваем на всю ширину */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -138,7 +90,6 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
         </form>
     </div>
     <?php
-    // Очищаем ошибки и значения после отображения
     unset($_SESSION['errors'], $_SESSION['values']);
     ?>
 </body>
