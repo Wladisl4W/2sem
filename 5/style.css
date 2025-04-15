@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 400px;
+    max-width: 700px; /* Увеличиваем ширину контейнера */
 }
 
 .form-control, .form-select, .form-check-input {
@@ -25,21 +25,17 @@ body {
     border-color: #e91e63;
 }
 
-.btn-custom {
-    background-color: #e91e63;
-    color: #ffffff;
-    border: none;
-}
-
-.btn-custom:hover {
-    background-color: #c2185b;
+.btn-custom, .btn-primary, .btn-secondary {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px; /* Исправляем размеры кнопок */
+    font-size: 1rem;
+    border-radius: 5px;
 }
 
 .btn-primary {
     background-color: #e91e63;
     border: none;
-    font-size: 1rem;
-    padding: 10px 20px;
 }
 
 .btn-primary:hover {
