@@ -12,16 +12,18 @@ body {
 
 .container-narrow {
     max-width: 400px; /* Узкая ширина для login.php и success.php */
+    width: 100%; /* Контейнер занимает всю ширину экрана */
+    padding: 0 15px; /* Отступы для мобильных устройств */
 }
 
 .container-wide {
     max-width: 650px; /* Ширина для form.php и edit.php */
+    width: 100%; /* Контейнер занимает всю ширину экрана */
+    padding: 0 15px; /* Отступы для мобильных устройств */
 }
 
 form {
-    max-width: 100%; /* Формы занимают всю ширину контейнера */
-    width: 100%; /* Устанавливаем ширину формы */
-    margin: 0 auto; /* Центрируем форму внутри контейнера */
+    width: 100%; /* Формы занимают всю ширину контейнера */
 }
 
 .form-control, .form-select, .form-check-input {
@@ -45,7 +47,7 @@ form {
 .btn-custom, .btn-primary, .btn-secondary {
     display: inline-block;
     text-align: center;
-    padding: 10px 15px; /* Исправляем размеры кнопок */
+    padding: 10px 15px;
     font-size: 1rem;
     border-radius: 5px;
 }
