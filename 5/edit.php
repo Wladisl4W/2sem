@@ -209,17 +209,19 @@ try {
             background-color: #1e1e1e !important;
         }
         .header-box {
-            display: inline-block;
-            padding: 10px 20px;
-            border: 2px solid #e91e63; /* Розовая обводка */
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #e91e63; /* Розовый фон */
+            color: #ffffff; /* Белый текст */
+            text-align: center; /* Центрирование текста */
+            padding: 10px 0; /* Отступы сверху и снизу */
+            border-radius: 5px; /* Закругленные углы */
+            margin-bottom: 20px; /* Отступ снизу */
+            width: 100%; /* Растягиваем на всю ширину */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center header-box">Редактирование данных</h1>
+        <div class="header-box">Редактирование данных</div>
         <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>

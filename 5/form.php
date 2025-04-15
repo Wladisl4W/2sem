@@ -59,17 +59,19 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
             background-color: #1e1e1e !important; /* Фон формы без оттенков */
         }
         .header-box {
-            display: inline-block;
-            padding: 10px 20px;
-            border: 2px solid #e91e63; /* Розовая обводка */
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #e91e63; /* Розовый фон */
+            color: #ffffff; /* Белый текст */
+            text-align: center; /* Центрирование текста */
+            padding: 10px 0; /* Отступы сверху и снизу */
+            border-radius: 5px; /* Закругленные углы */
+            margin-bottom: 20px; /* Отступ снизу */
+            width: 100%; /* Растягиваем на всю ширину */
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center header-box">Регистрация</h1>
+        <div class="header-box">Регистрация</div>
 
         <form action="register.php" method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
