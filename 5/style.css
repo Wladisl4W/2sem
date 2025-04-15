@@ -3,6 +3,11 @@ body {
     color: #ffffff;
     padding-top: 50px;
     padding-bottom: 50px;
+    display: flex;
+    justify-content: center; /* Центрируем содержимое по горизонтали */
+    align-items: flex-start; /* Выравниваем содержимое сверху */
+    min-height: 100vh; /* Высота экрана */
+    margin: 0;
 }
 
 .container-narrow {
