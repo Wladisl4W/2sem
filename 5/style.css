@@ -4,34 +4,34 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     display: flex;
-    justify-content: center; /* Центрируем содержимое по горизонтали */
-    align-items: flex-start; /* Выравниваем содержимое сверху */
-    min-height: 100vh; /* Высота экрана */
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
     margin: 0;
 }
 
 .container-narrow {
-    max-width: 400px; /* Узкая ширина для login.php и success.php */
-    width: 100%; /* Контейнер занимает всю ширину экрана */
-    padding: 0 15px; /* Отступы для мобильных устройств */
+    max-width: 400px;
+    width: 100%;
+    padding: 0 15px;
 }
 
 .container-wide {
-    max-width: 650px; /* Ширина для form.php и edit.php */
-    width: 100%; /* Контейнер занимает всю ширину экрана */
-    padding: 0 15px; /* Отступы для мобильных устройств */
+    max-width: 650px;
+    width: 100%;
+    padding: 0 15px;
 }
 
 form {
-    width: 100%; /* Формы занимают всю ширину контейнера */
+    width: 100%;
 }
 
 .form-control, .form-select, .form-check-input {
     background-color: #2a2a2a;
     color: #ffffff;
     border: 1px solid #444;
-    width: 100%; /* Поля ввода занимают всю ширину формы */
-    box-sizing: border-box; /* Учитываем отступы и границы */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-control:focus, .form-select:focus {
@@ -41,20 +41,20 @@ form {
 
 .form-check {
     display: flex;
-    align-items: center; /* Выравниваем чекбоксы и текст по вертикали */
-    margin-bottom: 10px; /* Отступ между строками */
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .form-check-input {
-    width: 20px; /* Устанавливаем фиксированную ширину для квадратиков */
-    height: 20px; /* Устанавливаем фиксированную высоту для квадратиков */
-    margin-right: 10px; /* Отступ между чекбоксом и текстом */
-    vertical-align: middle; /* Выравниваем чекбокс по центру текста */
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 .form-check-label {
-    margin: 0; /* Убираем лишние отступы у текста */
-    vertical-align: middle; /* Выравниваем текст по центру чекбокса */
+    margin: 0;
+    vertical-align: middle;
 }
 
 .form-check-input:checked {
@@ -71,7 +71,7 @@ form {
 }
 
 .btn-custom {
-    background-color: #e91e63; /* Исправляем цвет кнопки "Отправить" */
+    background-color: #e91e63;
     color: #ffffff;
     border: none;
 }
