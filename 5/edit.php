@@ -5,7 +5,7 @@ if (empty($_SESSION['user_id'])) {
     exit();
 }
 
-include("../../../pass.php");
+include("../db.php");
 include("../validation.php");
 
 function getEditValue($name) {
@@ -18,6 +18,16 @@ function getEditError($name) {
 
 $errors = [];
 $success = null;
+$logoutError = null;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+    if (session_destroy()) {
+        header('Location: login.php');
+        exit();
+    } else {
+        $logoutError = 'Не удалось завершить сессию. Попробуйте снова.';
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
     $errors = validateFormData($_POST);
@@ -28,10 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
         $success = null;
     } else {
         try {
-            $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]);
+            $db = getDatabaseConnection();
 
             $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
             $stmt->execute([
@@ -55,15 +62,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
 }
 
 try {
-    $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
-        PDO::ATTR_PERSISTENT => true,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+    $db = getDatabaseConnection();
 
-    if (isset($_POST['logout'])) {
-        session_destroy();
-        header('Location: login.php');
-        exit();
+    // Проверяем, существует ли пользователь с указанным user_id
+    $stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $userExists = $stmt->fetchColumn();
+
+    if (!$userExists) {
+        die('Ошибка: пользователь не найден.');
     }
 
     $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
@@ -110,20 +117,23 @@ try {
         <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
+        <?php if (!empty($logoutError)): ?>
+            <div class="alert alert-danger text-center"><?= htmlspecialchars($logoutError) ?></div>
+        <?php endif; ?>
         <form method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
                 <label class="form-label">ФИО:</label>
-                <input type="text" name="FIO" class="form-control <?= getEditError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('FIO') ?: $data['full_name']) ?>" required>
+                <input type="text" name="FIO" class="form-control <?= getEditError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('FIO') ?: $data['full_name']) ?>" maxlength="150" required>
                 <div class="invalid-feedback"><?= htmlspecialchars(getEditError('FIO')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Телефон:</label>
-                <input type="tel" name="tel" class="form-control <?= getEditError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('tel') ?: $data['phone_number']) ?>" required>
+                <input type="tel" name="tel" class="form-control <?= getEditError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('tel') ?: $data['phone_number']) ?>" maxlength="15" required>
                 <div class="invalid-feedback"><?= htmlspecialchars(getEditError('tel')) ?></div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control <?= getEditError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('email') ?: $data['email_address']) ?>" required>
+                <input type="email" name="email" class="form-control <?= getEditError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getEditValue('email') ?: $data['email_address']) ?>" maxlength="80" required>
                 <div class="invalid-feedback"><?= htmlspecialchars(getEditError('email')) ?></div>
             </div>
             <div class="mb-3">
@@ -154,7 +164,7 @@ try {
             </div>
             <div class="mb-3">
                 <label class="form-label">Биография:</label>
-                <textarea name="bio" class="form-control <?= getEditError('bio') ? 'is-invalid' : '' ?>" rows="4"><?= htmlspecialchars(getEditValue('bio') ?: $data['biography']) ?></textarea>
+                <textarea name="bio" class="form-control <?= getEditError('bio') ? 'is-invalid' : '' ?>" rows="4" maxlength="1000"><?= htmlspecialchars(getEditValue('bio') ?: $data['biography']) ?></textarea>
                 <div class="invalid-feedback"><?= htmlspecialchars(getEditError('bio')) ?></div>
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>

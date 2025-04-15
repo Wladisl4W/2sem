@@ -4,6 +4,12 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
     header('Location: register.php');
     exit();
 }
+
+$login = $_SESSION['login'];
+$password = $_SESSION['password'];
+
+// Удаляем пароль из сессии сразу после его извлечения
+unset($_SESSION['password']);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -23,11 +29,11 @@ if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
             <div class="card-body">
                 <div class="block-spacing">
                     <p>Ваш логин:</p>
-                    <p class="highlight"><?= htmlspecialchars($_SESSION['login']) ?></p>
+                    <p class="highlight"><?= htmlspecialchars($login) ?></p>
                 </div>
                 <div class="block-spacing">
                     <p>Ваш пароль:</p>
-                    <p class="highlight"><?= htmlspecialchars($_SESSION['password']) ?></p>
+                    <p class="highlight"><?= htmlspecialchars($password) ?></p>
                 </div>
                 <a href="login.php" class="btn btn-primary w-100 mt-3">Войти</a>
             </div>

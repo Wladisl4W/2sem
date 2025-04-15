@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
-include("../../../pass.php");
+include("../db.php");
 include("../validation.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,10 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     try {
-        $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+        $db = getDatabaseConnection();
 
         $login = 'user_' . bin2hex(random_bytes(4));
         $password = bin2hex(random_bytes(4));

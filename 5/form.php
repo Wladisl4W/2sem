@@ -28,19 +28,19 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
         <form action="register.php" method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
                 <label class="form-label">ФИО:</label>
-                <input type="text" name="FIO" class="form-control <?= getError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('FIO')) ?>">
+                <input type="text" name="FIO" class="form-control <?= getError('FIO') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('FIO')) ?>" maxlength="150">
                 <div class="invalid-feedback"><?= htmlspecialchars(getError('FIO')) ?></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Телефон:</label>
-                <input type="tel" name="tel" class="form-control <?= getError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('tel')) ?>">
+                <input type="tel" name="tel" class="form-control <?= getError('tel') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('tel')) ?>" maxlength="15">
                 <div class="invalid-feedback"><?= htmlspecialchars(getError('tel')) ?></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control <?= getError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('email')) ?>">
+                <input type="email" name="email" class="form-control <?= getError('email') ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars(getValue('email')) ?>" maxlength="80">
                 <div class="invalid-feedback"><?= htmlspecialchars(getError('email')) ?></div>
             </div>
 
@@ -82,7 +82,7 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
 
             <div class="mb-3">
                 <label class="form-label">Биография:</label>
-                <textarea name="bio" class="form-control <?= getError('bio') ? 'is-invalid' : '' ?>" rows="4"><?= htmlspecialchars(getValue('bio')) ?></textarea>
+                <textarea name="bio" class="form-control <?= getError('bio') ? 'is-invalid' : '' ?>" rows="4" maxlength="1000"><?= htmlspecialchars(getValue('bio')) ?></textarea>
                 <div class="invalid-feedback"><?= htmlspecialchars(getError('bio')) ?></div>
             </div>
 

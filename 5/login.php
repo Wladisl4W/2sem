@@ -1,27 +1,30 @@
 <?php
 session_start();
+include("../db.php");
+
+$error = null;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include("../../../pass.php");
+    if (empty($_POST['login']) || empty($_POST['password'])) {
+        $error = 'Пожалуйста, заполните оба поля.';
+    } else {
+        try {
+            $db = getDatabaseConnection();
 
-    try {
-        $db = new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+            $stmt = $db->prepare("SELECT user_id, password_hash FROM users WHERE user_login = ?");
+            $stmt->execute([$_POST['login']]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $db->prepare("SELECT user_id, password_hash FROM users WHERE user_login = ?");
-        $stmt->execute([$_POST['login']]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($_POST['password'], $user['password_hash'])) {
-            $_SESSION['user_id'] = $user['user_id'];
-            header('Location: edit.php');
-            exit();
-        } else {
-            $error = 'Неверный логин или пароль.';
+            if ($user && password_verify($_POST['password'], $user['password_hash'])) {
+                $_SESSION['user_id'] = $user['user_id'];
+                header('Location: edit.php');
+                exit();
+            } else {
+                $error = 'Неверный логин или пароль.';
+            }
+        } catch (PDOException $e) {
+            $error = 'Ошибка БД: ' . $e->getMessage();
         }
-    } catch (PDOException $e) {
-        $error = 'Ошибка БД: ' . $e->getMessage();
     }
 }
 ?>
@@ -38,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container-narrow">
         <div class="header-box">Вход</div>
         <?php if (!empty($error)): ?>
-            <div class="alert text-center"><?= htmlspecialchars($error) ?></div>
+            <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
         <form method="post" class="border p-4 rounded bg-dark">
             <div class="mb-3">
