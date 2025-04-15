@@ -216,13 +216,6 @@ try {
         <?php if (!empty($success)): ?>
             <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
-        <?php if (!empty($_SESSION['edit_errors'])): ?>
-            <div class="alert alert-danger text-center">
-                <?php foreach ($_SESSION['edit_errors'] as $error): ?>
-                    <p><?= htmlspecialchars($error) ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
         <form method="post" class="p-4 border rounded bg-dark">
             <div class="mb-3">
                 <label class="form-label">ФИО:</label>
