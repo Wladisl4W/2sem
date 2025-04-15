@@ -271,7 +271,7 @@ try {
             </div>
             <button type="submit" class="btn btn-custom w-100 mb-3">Сохранить</button>
         </form>
-        <div class="logout-container">
+        <div class="logout-container mt-5">
             <form method="post">
                 <button type="submit" name="logout" class="btn btn-logout w-100">Выйти</button>
             </form>
