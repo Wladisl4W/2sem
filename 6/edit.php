@@ -1,112 +1,37 @@
 <?php
 session_start();
-if (empty($_SESSION['user_id']) && empty($_GET['application_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
 include("../db.php");
 include("../validation.php");
 
-$applicationId = $_GET['application_id'] ?? null;
+$applicationId = $_GET['application_id'] ?? $_SESSION['application_id'] ?? null;
 
-if ($applicationId) {
-    $db = getDatabaseConnection();
-
-    $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");
-    $stmt->execute([$applicationId]);
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    $stmt = $db->prepare("SELECT language_id FROM application_languages WHERE application_id = ?");
-    $stmt->execute([$applicationId]);
-    $selectedLanguages = $stmt->fetchAll(PDO::FETCH_COLUMN);
-} else {
+if (!$applicationId) {
     die('Ошибка: ID заявки не указан.');
-}
-
-function getEditValue($name) {
-    return $_SESSION['edit_values'][$name] ?? '';
-}
-
-function getEditError($name) {
-    return $_SESSION['edit_errors'][$name] ?? '';
-}
-
-$errors = [];
-$success = null;
-$logoutError = null;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
-    if (session_destroy()) {
-        header('Location: login.php');
-        exit();
-    } else {
-        $logoutError = 'Не удалось завершить сессию. Попробуйте снова.';
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
-    $errors = validateFormData($_POST);
-
-    if (!empty($errors)) {
-        $_SESSION['edit_values'] = $_POST;
-        $_SESSION['edit_errors'] = $errors;
-        $success = null;
-    } else {
-        try {
-            $db = getDatabaseConnection();
-
-            $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
-            $stmt->execute([
-                $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $_SESSION['application_id']
-            ]);
-
-            $stmt = $db->prepare("DELETE FROM application_languages WHERE application_id = ?");
-            $stmt->execute([$_SESSION['application_id']]);
-
-            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
-            foreach ($_POST['lang'] as $languageId) {
-                $stmt->execute([$_SESSION['application_id'], $languageId]);
-            }
-
-            $success = 'Данные успешно обновлены.';
-            unset($_SESSION['edit_values'], $_SESSION['edit_errors']);
-        } catch (PDOException $e) {
-            die('Ошибка БД: ' . $e->getMessage());
-        }
-    }
 }
 
 try {
     $db = getDatabaseConnection();
 
-    // Проверяем, существует ли пользователь с указанным user_id
-    $stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE user_id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $userExists = $stmt->fetchColumn();
+    // Проверяем, существует ли заявка с указанным application_id
+    $stmt = $db->prepare("SELECT COUNT(*) FROM user_applications WHERE application_id = ?");
+    $stmt->execute([$applicationId]);
+    $applicationExists = $stmt->fetchColumn();
 
-    if (!$userExists) {
-        die('Ошибка: пользователь не найден.');
-    }
-
-    $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $applicationId = $stmt->fetchColumn();
-
-    if (!$applicationId) {
+    if (!$applicationExists) {
         die('Ошибка: заявка не найдена.');
     }
 
-    $_SESSION['application_id'] = $applicationId;
-
+    // Получаем данные заявки
     $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");
     $stmt->execute([$applicationId]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Получаем связанные языки программирования
     $stmt = $db->prepare("SELECT language_id FROM application_languages WHERE application_id = ?");
     $stmt->execute([$applicationId]);
     $selectedLanguages = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+    // Получаем список всех языков программирования
     $stmt = $db->query("SELECT language_id, language_name FROM programming_languages");
     $languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -116,6 +41,35 @@ try {
     }
 } catch (PDOException $e) {
     die('Ошибка БД: ' . $e->getMessage());
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
+    $errors = validateFormData($_POST);
+
+    if (!empty($errors)) {
+        $_SESSION['edit_values'] = $_POST;
+        $_SESSION['edit_errors'] = $errors;
+    } else {
+        try {
+            $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
+            $stmt->execute([
+                $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $applicationId
+            ]);
+
+            $stmt = $db->prepare("DELETE FROM application_languages WHERE application_id = ?");
+            $stmt->execute([$applicationId]);
+
+            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
+            foreach ($_POST['lang'] as $languageId) {
+                $stmt->execute([$applicationId, $languageId]);
+            }
+
+            $success = 'Данные успешно обновлены.';
+            unset($_SESSION['edit_values'], $_SESSION['edit_errors']);
+        } catch (PDOException $e) {
+            die('Ошибка БД: ' . $e->getMessage());
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
