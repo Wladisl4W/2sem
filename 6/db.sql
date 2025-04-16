@@ -50,3 +50,15 @@ CREATE TABLE users (
   PRIMARY KEY (user_id),
   FOREIGN KEY (application_id) REFERENCES user_applications (application_id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
+
+-- Таблица для хранения данных администратора
+CREATE TABLE admin_users (
+  admin_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  admin_login VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  PRIMARY KEY (admin_id)
+) ENGINE = InnoDB;
+
+-- Добавление администратора
+INSERT INTO admin_users (admin_login, password_hash) VALUES
+('admin', MD5('123'));

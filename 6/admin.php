@@ -2,20 +2,26 @@
 session_start();
 include("../db.php");
 
-// HTTP-аутентификация
-$adminLogin = 'admin';
-$adminPasswordHash = md5('123'); // Хэш пароля администратора
+$db = getDatabaseConnection();
 
-if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
-    $_SERVER['PHP_AUTH_USER'] != $adminLogin ||
-    md5($_SERVER['PHP_AUTH_PW']) != $adminPasswordHash) {
+// HTTP-аутентификация
+if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW'])) {
     header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Basic realm="Admin Panel"');
     print('<h1>401 Требуется авторизация</h1>');
     exit();
 }
 
-$db = getDatabaseConnection();
+$stmt = $db->prepare("SELECT password_hash FROM admin_users WHERE admin_login = ?");
+$stmt->execute([$_SERVER['PHP_AUTH_USER']]);
+$admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$admin || md5($_SERVER['PHP_AUTH_PW']) != $admin['password_hash']) {
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Basic realm="Admin Panel"');
+    print('<h1>401 Требуется авторизация</h1>');
+    exit();
+}
 
 // Удаление данных пользователя
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
