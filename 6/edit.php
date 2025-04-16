@@ -3,10 +3,21 @@ session_start();
 include("../db.php");
 include("../validation.php");
 
-$applicationId = $_GET['application_id'] ?? $_SESSION['application_id'] ?? null;
+// Определяем application_id
+if (isset($_GET['application_id'])) {
+    $applicationId = $_GET['application_id'];
+} elseif (isset($_SESSION['user_id'])) {
+    // Получаем application_id для обычного пользователя
+    $db = getDatabaseConnection();
+    $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $applicationId = $stmt->fetchColumn();
+} else {
+    die('Ошибка: ID заявки не указан.');
+}
 
 if (!$applicationId) {
-    die('Ошибка: ID заявки не указан.');
+    die('Ошибка: заявка не найдена.');
 }
 
 try {
