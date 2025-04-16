@@ -1,12 +1,28 @@
 <?php
 session_start();
-if (empty($_SESSION['user_id'])) {
+if (empty($_SESSION['user_id']) && empty($_GET['application_id'])) {
     header('Location: login.php');
     exit();
 }
 
 include("../db.php");
 include("../validation.php");
+
+$applicationId = $_GET['application_id'] ?? null;
+
+if ($applicationId) {
+    $db = getDatabaseConnection();
+
+    $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");
+    $stmt->execute([$applicationId]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stmt = $db->prepare("SELECT language_id FROM application_languages WHERE application_id = ?");
+    $stmt->execute([$applicationId]);
+    $selectedLanguages = $stmt->fetchAll(PDO::FETCH_COLUMN);
+} else {
+    die('Ошибка: ID заявки не указан.');
+}
 
 function getEditValue($name) {
     return $_SESSION['edit_values'][$name] ?? '';
