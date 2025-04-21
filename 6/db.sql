@@ -59,7 +59,8 @@ CREATE TABLE users (
    PRIMARY KEY (admin_id)
  ) ENGINE = InnoDB;
  
- -- Добавление администратора
+ -- Добавление администратора 
 DELETE FROM admin_users WHERE admin_login = 'admin';
 INSERT INTO admin_users (admin_login, password_hash) VALUES
 ('admin', '$2y$10$eImiTXuWVxfM37uY4JANjQe5Jxq2p5s8F5l5a5l5a5l5a5l5a5l5a'); -- Хэш для пароля "123"
+UPDATE admin_users SET password_hash = '$2y$10$PZWYz2Fcd0wPAYzUH5Lfw.aDbXuzV2GxgBjqQaYQIusGhh/tEwTC2' WHERE admin_login = 'admin';
