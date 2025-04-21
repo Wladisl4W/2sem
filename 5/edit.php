@@ -21,6 +21,7 @@ $success = null;
 $logoutError = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+    $_SESSION = [];
     if (session_destroy()) {
         header('Location: login.php');
         exit();
@@ -42,36 +43,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
 
             $stmt = $db->prepare("UPDATE user_applications SET full_name = ?, phone_number = ?, email_address = ?, birth_date = ?, gender = ?, biography = ? WHERE application_id = ?");
             $stmt->execute([
-                $_POST['FIO'], $_POST['tel'], $_POST['email'], $_POST['DR'], $_POST['sex'], $_POST['bio'], $_SESSION['application_id']
+                htmlspecialchars($_POST['FIO']), htmlspecialchars($_POST['tel']), htmlspecialchars($_POST['email']),
+                htmlspecialchars($_POST['DR']), htmlspecialchars($_POST['sex']), htmlspecialchars($_POST['bio']),
+                $_SESSION['application_id']
             ]);
 
             $stmt = $db->prepare("DELETE FROM application_languages WHERE application_id = ?");
             $stmt->execute([$_SESSION['application_id']]);
 
-            $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
-            foreach ($_POST['lang'] as $languageId) {
-                $stmt->execute([$_SESSION['application_id'], $languageId]);
+            if (!empty($_POST['lang']) && is_array($_POST['lang'])) {
+                $stmt = $db->prepare("INSERT INTO application_languages (application_id, language_id) VALUES (?, ?)");
+                foreach ($_POST['lang'] as $languageId) {
+                    if (is_numeric($languageId)) {
+                        $stmt->execute([$_SESSION['application_id'], $languageId]);
+                    }
+                }
             }
 
             $success = 'Данные успешно обновлены.';
             unset($_SESSION['edit_values'], $_SESSION['edit_errors']);
         } catch (PDOException $e) {
-            die('Ошибка БД: ' . $e->getMessage());
+            error_log('Database Error: ' . $e->getMessage());
+            $success = null;
+            $errors['db'] = 'Произошла ошибка при обновлении данных. Попробуйте позже.';
         }
     }
 }
 
 try {
     $db = getDatabaseConnection();
-
-    // Проверяем, существует ли пользователь с указанным user_id
-    $stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE user_id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $userExists = $stmt->fetchColumn();
-
-    if (!$userExists) {
-        die('Ошибка: пользователь не найден.');
-    }
 
     $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
