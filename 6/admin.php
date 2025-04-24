@@ -86,7 +86,7 @@ try {
         </table>
 
         <h2 class="text-center my-4">Пользователи</h2>
-        <div class="table-responsive mx-auto" style="max-width: 90%;">
+        <div class="table-responsive mx-auto" style="width: 100%; max-width: 100%;">
             <table class="table table-dark table-striped w-100">
                 <thead>
                     <tr>
