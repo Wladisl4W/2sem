@@ -174,3 +174,12 @@ form {
     font-weight: bold;
     font-size: 1.3rem;
 }
+
+.table {
+    margin: 0 auto; /* Центрирование таблицы */
+    width: 100%; /* Таблица занимает всю ширину */
+}
+
+.table-responsive {
+    max-width: 90%; /* Ограничение ширины таблицы */
+}
