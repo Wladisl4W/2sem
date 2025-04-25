@@ -16,14 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($_POST['password'], $user['password_hash'])) {
-                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['user_id'] = intval($user['user_id']);
                 header('Location: edit.php');
                 exit();
             } else {
                 $error = 'Неверный логин или пароль.';
             }
         } catch (PDOException $e) {
-            $error = 'Ошибка БД: ' . $e->getMessage();
+            error_log('Database error: ' . $e->getMessage());
+            $error = 'Ошибка базы данных. Пожалуйста, попробуйте позже.';
         }
     }
 }

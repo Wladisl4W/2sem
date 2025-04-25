@@ -2,6 +2,11 @@
 session_start();
 include("../db.php");
 
+// Генерация CSRF-токена
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
     header('WWW-Authenticate: Basic realm="Админ-панель"');
     header('HTTP/1.0 401 Unauthorized');
@@ -19,35 +24,46 @@ try {
         die('Доступ запрещён');
     }
 } catch (PDOException $e) {
-    die('Ошибка базы данных: ' . $e->getMessage());
+    // Логируем ошибку вместо отображения пользователю
+    error_log('Database error: ' . $e->getMessage());
+    die('Ошибка базы данных. Пожалуйста, попробуйте позже.');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('Ошибка CSRF: недействительный токен.');
+    }
+
     try {
         $stmt = $db->prepare("DELETE FROM user_applications WHERE application_id = ?");
-        $stmt->execute([$_POST['delete_id']]);
+        $stmt->execute([intval($_POST['delete_id'])]); // Приводим к числу для безопасности
         header('Location: admin.php');
         exit();
     } catch (PDOException $e) {
-        $error = 'Ошибка при удалении пользователя: ' . $e->getMessage();
+        error_log('Database error: ' . $e->getMessage());
+        $error = 'Ошибка при удалении пользователя. Пожалуйста, попробуйте позже.';
     }
 }
 
 try {
-    $stmt = $db->query("SELECT ua.application_id, ua.full_name, ua.phone_number, ua.email_address, ua.birth_date, ua.gender, ua.biography, GROUP_CONCAT(pl.language_name SEPARATOR ', ') AS languages
-                        FROM user_applications ua
-                        LEFT JOIN application_languages al ON ua.application_id = al.application_id
-                        LEFT JOIN programming_languages pl ON al.language_id = pl.language_id
-                        GROUP BY ua.application_id");
+    $stmt = $db->prepare("SELECT ua.application_id, ua.full_name, ua.phone_number, ua.email_address, ua.birth_date, ua.gender, ua.biography, GROUP_CONCAT(pl.language_name SEPARATOR ', ') AS languages
+                          FROM user_applications ua
+                          LEFT JOIN application_languages al ON ua.application_id = al.application_id
+                          LEFT JOIN programming_languages pl ON al.language_id = pl.language_id
+                          GROUP BY ua.application_id");
+    $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $db->query("SELECT pl.language_name, COUNT(al.language_id) AS user_count
-                        FROM programming_languages pl
-                        LEFT JOIN application_languages al ON pl.language_id = al.language_id
-                        GROUP BY pl.language_id");
+    $stmt = $db->prepare("SELECT pl.language_name, COUNT(al.language_id) AS user_count
+                          FROM programming_languages pl
+                          LEFT JOIN application_languages al ON pl.language_id = al.language_id
+                          GROUP BY pl.language_id");
+    $stmt->execute();
     $statistics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die('Ошибка базы данных: ' . $e->getMessage());
+    // Логируем ошибку вместо отображения пользователю
+    error_log('Database error: ' . $e->getMessage());
+    die('Ошибка базы данных. Пожалуйста, попробуйте позже.');
 }
 ?>
 <!DOCTYPE html>
@@ -114,9 +130,10 @@ try {
                             <td><?= htmlspecialchars($user['biography']) ?></td>
                             <td><?= htmlspecialchars($user['languages']) ?></td>
                             <td>
-                                <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
+                                <a href="edit.php?id=<?= htmlspecialchars($user['application_id']) ?>" class="btn btn-sm btn-primary">Редактировать</a>
                                 <form method="post" style="display:inline;">
-                                    <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
+                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                                    <input type="hidden" name="delete_id" value="<?= htmlspecialchars($user['application_id']) ?>">
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
                                 </form>
                             </td>

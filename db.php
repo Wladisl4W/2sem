@@ -9,7 +9,9 @@ function getDatabaseConnection() {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
     } catch (PDOException $e) {
+        // Логируем ошибку вместо отображения пользователю
         error_log('Database connection error: ' . $e->getMessage());
+        // Отображаем общее сообщение об ошибке
         die('Ошибка подключения к базе данных. Пожалуйста, попробуйте позже.');
     }
 }
