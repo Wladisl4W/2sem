@@ -87,7 +87,7 @@ try {
 
         <!-- Таблица пользователей -->
         <div class="table-responsive" style="width: 98%; margin: 20px auto;">
-            <h2 class="text-center my-4">Пользователи</h2>
+            <h2 class="text-center my-2">Пользователи</h2>
             <table class="table table-dark table-striped w-100">
                 <thead>
                     <tr>
