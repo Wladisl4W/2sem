@@ -60,72 +60,73 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="text-center my-4">
-        <h1 class="header-box">Админ-панель</h1>
-    </div>
+    <div>
+        <!-- Заголовок и статистика -->
+        <div class="container-wide text-center">
+            <h1 class="header-box">Админ-панель</h1>
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
 
-    <div class="container-wide text-center">
-        <?php if (!empty($error)): ?>
-            <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-
-        <h2 class="my-4">Статистика</h2>
-        <table class="table table-dark table-striped w-100 mx-auto">
-            <thead>
-                <tr>
-                    <th>Язык программирования</th>
-                    <th>Количество пользователей</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($statistics as $stat): ?>
+            <h2 class="my-4">Статистика</h2>
+            <table class="table table-dark table-striped w-100 mx-auto">
+                <thead>
                     <tr>
-                        <td><?= htmlspecialchars($stat['language_name']) ?></td>
-                        <td><?= htmlspecialchars($stat['user_count']) ?></td>
+                        <th>Язык программирования</th>
+                        <th>Количество пользователей</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <?php foreach ($statistics as $stat): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($stat['language_name']) ?></td>
+                            <td><?= htmlspecialchars($stat['user_count']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <div class="table-responsive" style="width: 98%; margin: 20px auto;">
-        <h2 class="text-center my-4">Пользователи</h2>
-        <table class="table table-dark table-striped w-100">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>ФИО</th>
-                    <th>Телефон</th>
-                    <th>Email</th>
-                    <th>Дата рождения</th>
-                    <th>Пол</th>
-                    <th>Биография</th>
-                    <th>Языки программирования</th>
-                    <th>Действия</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user): ?>
+        <!-- Таблица пользователей -->
+        <div class="table-responsive" style="width: 98%; margin: 20px auto;">
+            <h2 class="text-center my-4">Пользователи</h2>
+            <table class="table table-dark table-striped w-100">
+                <thead>
                     <tr>
-                        <td><?= htmlspecialchars($user['application_id']) ?></td>
-                        <td><?= htmlspecialchars($user['full_name']) ?></td>
-                        <td><?= htmlspecialchars($user['phone_number']) ?></td>
-                        <td><?= htmlspecialchars($user['email_address']) ?></td>
-                        <td><?= htmlspecialchars($user['birth_date']) ?></td>
-                        <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
-                        <td><?= htmlspecialchars($user['biography']) ?></td>
-                        <td><?= htmlspecialchars($user['languages']) ?></td>
-                        <td>
-                            <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
-                            <form method="post" style="display:inline;">
-                                <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
-                            </form>
-                        </td>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Телефон</th>
+                        <th>Email</th>
+                        <th>Дата рождения</th>
+                        <th>Пол</th>
+                        <th>Биография</th>
+                        <th>Языки программирования</th>
+                        <th>Действия</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($user['application_id']) ?></td>
+                            <td><?= htmlspecialchars($user['full_name']) ?></td>
+                            <td><?= htmlspecialchars($user['phone_number']) ?></td>
+                            <td><?= htmlspecialchars($user['email_address']) ?></td>
+                            <td><?= htmlspecialchars($user['birth_date']) ?></td>
+                            <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
+                            <td><?= htmlspecialchars($user['biography']) ?></td>
+                            <td><?= htmlspecialchars($user['languages']) ?></td>
+                            <td>
+                                <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
+                                <form method="post" style="display:inline;">
+                                    <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
