@@ -18,7 +18,14 @@ body {
 }
 
 .container-wide {
-    max-width: 1200px; /* Общий контейнер почти на всю ширину страницы */
+    max-width: 1200px; 
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.container-fluid {
+    max-width: 1400px; 
     width: 100%;
     padding: 0 15px;
     margin: 0 auto;
@@ -184,12 +191,12 @@ form {
 }
 
 .table-responsive {
-    width: 98%; 
+    width: 100%; 
     max-width: 100%; 
     overflow-x: auto; 
     margin: 0 auto; 
 }
 
 .mx-auto {
-    margin: 0 auto; /* Центрирование контейнера */
+    margin: 0 auto; 
 }

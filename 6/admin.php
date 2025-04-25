@@ -60,7 +60,7 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-wide">
+    <div class="container-fluid">
         <!-- Заголовок -->
         <div class="header-box mx-auto" style="max-width: 800px;">Админ-панель</div>
 
@@ -86,7 +86,7 @@ try {
         </div>
 
         <!-- Таблица пользователей -->
-        <div class="table-responsive" style="width: 98%; margin: 20px auto;">
+        <div class="table-responsive" style="width: 100%; margin: 20px auto;">
             <h2 class="text-center my-4">Пользователи</h2>
             <table class="table table-dark table-striped w-100">
                 <thead>
