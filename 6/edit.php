@@ -1,12 +1,12 @@
 <?php
 session_start();
+include("../db.php");
+include("../validation.php");
+
 if (empty($_SESSION['user_id']) && empty($_GET['id'])) {
     header('Location: login.php');
     exit();
 }
-
-include("../db.php");
-include("../validation.php");
 
 function getEditValue($name) {
     return $_SESSION['edit_values'][$name] ?? '';
@@ -73,14 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['logout'])) {
 try {
     $db = getDatabaseConnection();
 
+    // Если передан ID через GET, используем его
     if (isset($_GET['id'])) {
         $applicationId = $_GET['id'];
-        $_SESSION['application_id'] = $applicationId;
+    } else {
+        // Если ID не передан, пытаемся получить его из сессии
+        $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        $applicationId = $stmt->fetchColumn();
     }
-
-    $stmt = $db->prepare("SELECT application_id FROM users WHERE user_id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $applicationId = $stmt->fetchColumn();
 
     if (!$applicationId) {
         die('Ошибка: заявка не найдена.');
@@ -88,14 +89,21 @@ try {
 
     $_SESSION['application_id'] = $applicationId;
 
+    // Получение данных пользователя
     $stmt = $db->prepare("SELECT full_name, phone_number, email_address, birth_date, gender, biography FROM user_applications WHERE application_id = ?");
     $stmt->execute([$applicationId]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    if (!$data) {
+        die('Ошибка: данные пользователя не найдены.');
+    }
+
+    // Получение выбранных языков программирования
     $stmt = $db->prepare("SELECT language_id FROM application_languages WHERE application_id = ?");
     $stmt->execute([$applicationId]);
     $selectedLanguages = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+    // Получение всех доступных языков программирования
     $stmt = $db->query("SELECT language_id, language_name FROM programming_languages");
     $languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
