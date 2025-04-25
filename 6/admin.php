@@ -63,13 +63,13 @@ try {
     <div>
         <!-- Заголовок и статистика -->
         <div class="container-wide text-center">
-            <h1 class="header-box">Админ-панель</h1>
+            <div class="header-box">Админ-панель</div>
             <?php if (!empty($error)): ?>
                 <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <h2 class="my-4">Статистика</h2>
-            <table class="table table-dark table-striped w-100 mx-auto">
+            <table class="table table-dark table-striped w-75 mx-auto">
                 <thead>
                     <tr>
                         <th>Язык программирования</th>

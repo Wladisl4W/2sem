@@ -137,7 +137,8 @@ form {
     padding: 10px 0;
     border-radius: 5px;
     margin-bottom: 20px;
-    width: 100%;
+    font-size: 1.5rem; /* Размер текста, как на странице "Вход" */
+    font-weight: bold;
 }
 
 .card {
