@@ -60,15 +60,14 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-wide text-center">
-        <!-- Заголовок -->
-        <div class="header-box">Админ-панель</div>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Админ-панель</h1>
 
-        <!-- Статистика -->
-        <div class="my-4">
-            <h2>Статистика</h2>
-            <table class="table table-dark table-striped w-100 mx-auto">
-                <thead>
+        <!-- Таблица статистики -->
+        <div class="mb-5">
+            <h2 class="text-center mb-3">Статистика языков</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
                     <tr>
                         <th>Язык программирования</th>
                         <th>Количество пользователей</th>
@@ -86,10 +85,10 @@ try {
         </div>
 
         <!-- Таблица пользователей -->
-        <div class="table-responsive" style="width: 98%; margin: 20px auto;">
-            <h2 class="text-center my-2">Пользователи</h2>
-            <table class="table table-dark table-striped w-100">
-                <thead>
+        <div>
+            <h2 class="text-center mb-3">Информация по пользователям</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>ФИО</th>
