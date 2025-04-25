@@ -60,15 +60,17 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-wide">
-        <div class="header-box">Админ-панель</div>
+    <div class="text-center my-4">
+        <h1 class="header-box">Админ-панель</h1>
+    </div>
 
+    <div class="container-wide text-center">
         <?php if (!empty($error)): ?>
             <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
 
-        <h2 class="text-center my-4">Статистика</h2>
-        <table class="table table-dark table-striped w-100">
+        <h2 class="my-4">Статистика</h2>
+        <table class="table table-dark table-striped w-100 mx-auto">
             <thead>
                 <tr>
                     <th>Язык программирования</th>
