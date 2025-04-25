@@ -18,9 +18,10 @@ body {
 }
 
 .container-wide {
-    max-width: 100%; 
+    max-width: 1200px; /* Общий контейнер почти на всю ширину страницы */
     width: 100%;
     padding: 0 15px;
+    margin: 0 auto;
 }
 
 form {
@@ -187,4 +188,8 @@ form {
     max-width: 100%; 
     overflow-x: auto; 
     margin: 0 auto; 
+}
+
+.mx-auto {
+    margin: 0 auto; /* Центрирование контейнера */
 }
