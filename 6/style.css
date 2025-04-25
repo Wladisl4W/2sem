@@ -181,8 +181,8 @@ form {
 }
 
 .table-responsive {
-    width: 100%; 
+    width: 98%; 
     max-width: 100%; 
-    overflow-x: auto;
-    padding: 0 15px; 
+    overflow-x: auto; 
+    margin: 0 auto; 
 }

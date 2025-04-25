@@ -84,46 +84,46 @@ try {
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
 
+    <div class="table-responsive" style="width: 98%; margin: 20px auto;">
         <h2 class="text-center my-4">Пользователи</h2>
-        <div class="table-responsive" style="width: 95%; margin: 0 auto;">
-            <table class="table table-dark table-striped w-100">
-                <thead>
+        <table class="table table-dark table-striped w-100">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th>Дата рождения</th>
+                    <th>Пол</th>
+                    <th>Биография</th>
+                    <th>Языки программирования</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
                     <tr>
-                        <th>ID</th>
-                        <th>ФИО</th>
-                        <th>Телефон</th>
-                        <th>Email</th>
-                        <th>Дата рождения</th>
-                        <th>Пол</th>
-                        <th>Биография</th>
-                        <th>Языки программирования</th>
-                        <th>Действия</th>
+                        <td><?= htmlspecialchars($user['application_id']) ?></td>
+                        <td><?= htmlspecialchars($user['full_name']) ?></td>
+                        <td><?= htmlspecialchars($user['phone_number']) ?></td>
+                        <td><?= htmlspecialchars($user['email_address']) ?></td>
+                        <td><?= htmlspecialchars($user['birth_date']) ?></td>
+                        <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
+                        <td><?= htmlspecialchars($user['biography']) ?></td>
+                        <td><?= htmlspecialchars($user['languages']) ?></td>
+                        <td>
+                            <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($user['application_id']) ?></td>
-                            <td><?= htmlspecialchars($user['full_name']) ?></td>
-                            <td><?= htmlspecialchars($user['phone_number']) ?></td>
-                            <td><?= htmlspecialchars($user['email_address']) ?></td>
-                            <td><?= htmlspecialchars($user['birth_date']) ?></td>
-                            <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
-                            <td><?= htmlspecialchars($user['biography']) ?></td>
-                            <td><?= htmlspecialchars($user['languages']) ?></td>
-                            <td>
-                                <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
-                                <form method="post" style="display:inline;">
-                                    <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
