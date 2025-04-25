@@ -86,8 +86,8 @@ try {
         </table>
 
         <h2 class="text-center my-4">Пользователи</h2>
-        <div class="table-responsive">
-            <table class="table table-dark table-striped">
+        <div class="table-responsive" style="width: 95%; margin: 0 auto;">
+            <table class="table table-dark table-striped w-100">
                 <thead>
                     <tr>
                         <th>ID</th>
