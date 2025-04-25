@@ -11,9 +11,10 @@ body {
 }
 
 .container-narrow {
-    max-width: 400px;
+    max-width: 400px; /* Устанавливаем ширину, как на странице login.php */
     width: 100%;
     padding: 0 15px;
+    margin: 0 auto; /* Центрируем контейнер */
 }
 
 .container-wide {
