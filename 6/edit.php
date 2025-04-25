@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['user_id'])) {
+if (empty($_SESSION['user_id']) && empty($_GET['id'])) {
     header('Location: login.php');
     exit();
 }
