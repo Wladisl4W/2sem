@@ -60,16 +60,18 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <!-- Заголовок и статистика -->
-        <div class="container-wide text-center">
-            <div class="header-box">Админ-панель</div>
+    <div class="text-center">
+        <!-- Заголовок -->
+        <div class="header-box mx-auto" style="max-width: 800px;">Админ-панель</div>
+
+        <!-- Статистика -->
+        <div class="container-wide text-center mx-auto" style="max-width: 800px;">
             <?php if (!empty($error)): ?>
                 <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <h2 class="my-4">Статистика</h2>
-            <table class="table table-dark table-striped w-75 mx-auto">
+            <table class="table table-dark table-striped w-100 mx-auto">
                 <thead>
                     <tr>
                         <th>Язык программирования</th>
@@ -86,47 +88,47 @@ try {
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <!-- Таблица пользователей -->
-        <div class="table-responsive" style="width: 98%; margin: 20px auto;">
-            <h2 class="text-center my-4">Пользователи</h2>
-            <table class="table table-dark table-striped w-100">
-                <thead>
+    <!-- Таблица пользователей -->
+    <div class="table-responsive" style="width: 98%; margin: 20px auto;">
+        <h2 class="text-center my-4">Пользователи</h2>
+        <table class="table table-dark table-striped w-100">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th>Дата рождения</th>
+                    <th>Пол</th>
+                    <th>Биография</th>
+                    <th>Языки программирования</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
                     <tr>
-                        <th>ID</th>
-                        <th>ФИО</th>
-                        <th>Телефон</th>
-                        <th>Email</th>
-                        <th>Дата рождения</th>
-                        <th>Пол</th>
-                        <th>Биография</th>
-                        <th>Языки программирования</th>
-                        <th>Действия</th>
+                        <td><?= htmlspecialchars($user['application_id']) ?></td>
+                        <td><?= htmlspecialchars($user['full_name']) ?></td>
+                        <td><?= htmlspecialchars($user['phone_number']) ?></td>
+                        <td><?= htmlspecialchars($user['email_address']) ?></td>
+                        <td><?= htmlspecialchars($user['birth_date']) ?></td>
+                        <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
+                        <td><?= htmlspecialchars($user['biography']) ?></td>
+                        <td><?= htmlspecialchars($user['languages']) ?></td>
+                        <td>
+                            <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($user['application_id']) ?></td>
-                            <td><?= htmlspecialchars($user['full_name']) ?></td>
-                            <td><?= htmlspecialchars($user['phone_number']) ?></td>
-                            <td><?= htmlspecialchars($user['email_address']) ?></td>
-                            <td><?= htmlspecialchars($user['birth_date']) ?></td>
-                            <td><?= $user['gender'] == 0 ? 'Мужской' : 'Женский' ?></td>
-                            <td><?= htmlspecialchars($user['biography']) ?></td>
-                            <td><?= htmlspecialchars($user['languages']) ?></td>
-                            <td>
-                                <a href="edit.php?id=<?= $user['application_id'] ?>" class="btn btn-sm btn-primary">Редактировать</a>
-                                <form method="post" style="display:inline;">
-                                    <input type="hidden" name="delete_id" value="<?= $user['application_id'] ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
