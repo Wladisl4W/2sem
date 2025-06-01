@@ -33,8 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute([$applicationId, $languageId]);
         }
 
-        $_SESSION['success'] = "Регистрация успешна! Ваш логин: $login, пароль: $password";
-        header('Location: ../index.html');
+        // Сохраняем логин и пароль в сессии
+        $_SESSION['login'] = $login;
+        $_SESSION['password'] = $password;
+
+        // Редирект на страницу success.php
+        header('Location: ../success.php');
         exit();
     } catch (PDOException $e) {
         error_log('Database error: ' . $e->getMessage());
