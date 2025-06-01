@@ -2,7 +2,7 @@
 session_start();
 
 // Используем whitelisting для подключаемых файлов
-$allowedIncludes = ['../db.php', '../validation.php'];
+$allowedIncludes = ['../../db.php', '../../validation.php'];
 
 foreach ($allowedIncludes as $file) {
     if (file_exists($file)) {

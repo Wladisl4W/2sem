@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../db.php");
+include("../../db.php");
 
 // Генерация CSRF-токена
 if (empty($_SESSION['csrf_token'])) {
