@@ -213,11 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Открываем модальное окно, если есть хэш #openLoginModal
-            <?php if (!empty($error) || isset($_GET['openLoginModal'])): ?>
-            const loginModal = new bootstrap.Modal(document.getElementById('modalForm'));
-            loginModal.show();
-            <?php endif; ?>
+            // Проверяем, есть ли в URL хэш #openLoginModal
+            if (window.location.hash === '#openLoginModal') {
+                const loginModal = new bootstrap.Modal(document.getElementById('modalForm'));
+                loginModal.show();
+            }
         });
     </script>
 </body>
