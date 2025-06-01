@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main>
         <button type="button" class="btn formOpenButton" id="showFormBtn" data-bs-toggle="modal" data-bs-target="#modalForm"></button>
-        <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static" <?= !empty($error) ? 'data-bs-show="true"' : '' ?>>
+        <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center form-head" style="background-color: #131313;">
@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if (!empty($error)): ?>
                             <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
                         <?php endif; ?>
-                        <form method="post" class="p-4">
+                        <form id="loginForm" method="post" action="" class="p-4">
                             <div class="mb-3">
                                 <label for="login" class="form-label text-white">Логин:</label>
                                 <input type="text" id="login" name="login" class="form-control" placeholder="Введите ваш логин" required>
@@ -213,11 +213,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Проверяем, есть ли в URL хэш #openLoginModal
-            if (window.location.hash === '#openLoginModal') {
-                const loginModal = new bootstrap.Modal(document.getElementById('modalForm'));
-                loginModal.show();
-            }
+            const loginForm = document.getElementById('loginForm');
+            const loginModal = new bootstrap.Modal(document.getElementById('modalForm'));
+
+            // Если есть ошибка, открываем модальное окно
+            <?php if (!empty($error)): ?>
+            loginModal.show();
+            <?php endif; ?>
+
+            // Предотвращаем закрытие модального окна при отправке формы
+            loginForm.addEventListener('submit', (event) => {
+                if (!loginForm.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                loginForm.classList.add('was-validated');
+            });
         });
     </script>
 </body>
