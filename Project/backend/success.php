@@ -35,7 +35,7 @@ unset($_SESSION['password']);
                     <p>Ваш пароль:</p>
                     <p class="highlight"><?= htmlspecialchars($password) ?></p>
                 </div>
-                <a href="login.php" class="btn btn-primary w-100 mt-3">Войти</a>
+                <a href="../index.html" class="btn btn-primary w-100 mt-3">На сайт</a> 
             </div>
         </div>
     </div>
