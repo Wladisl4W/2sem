@@ -176,5 +176,15 @@
             <img src="images/footer_background.png" alt="ryaniGoslingi" width="100%">
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Проверяем, есть ли в URL хэш #openLoginModal
+            if (window.location.hash === '#openLoginModal') {
+                const loginModal = new bootstrap.Modal(document.getElementById('modalForm'));
+                loginModal.show();
+            }
+        });
+    </script>
 </body>
 </html>
