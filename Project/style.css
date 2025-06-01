@@ -183,186 +183,174 @@ footer {
     width: 40px;
 }
 
-.card {
-    background-color: #1e1e1e; /* Темный фон */ze: 1.2rem;
-    border: none; /* Убираем границы */
-    border-radius: 10px; /* Закругленные углы */ный цвет текста */
-    box-shadow: none; /* Убираем тени */ackground: none; /* Убираем фон */
-}    padding: 0; /* Убираем отступы */
-аем внешние отступы */
-.card-body {
-    padding: 20px;
+.highlight {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #28a745; /* Зеленый цвет текста */
     background: none; /* Убираем фон */
-}argin-bottom: 1rem; /* Убираем лишние отступы */
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем внешние отступы */
+}
+
+.block-spacing {
+    margin-bottom: 1rem; /* Убираем лишние отступы */
     background: none; /* Убираем фон */
-@media only screen and (max-width: 1200px) {/* Убираем внутренние отступы */
+    padding: 0; /* Убираем внутренние отступы */
+}
+
+@media only screen and (max-width: 1200px) {
     #menu {
         flex-direction: column;
-        margin: 0 10px 0 0;px) {
+        margin: 0 10px 0 0;
     }
 
-    #menu .menu-text {   margin: 0 10px 0 0;
-        margin: 0;    }
+    #menu .menu-text {
+        margin: 0;
         height: 60px;
         justify-content: center;
-    }   margin: 0;
-        height: 60px;
+    }
+
     .menu-item {
         padding: 0;
         font-size: 30px;
         text-decoration: underline 3px;
         text-decoration-color: transparent;
         text-underline-offset: 0.35vw;
-    } underline 3px;
-on-color: transparent;
-    #menuMobile {   text-underline-offset: 0.35vw;
-        display: none;}
     }
 
-    .dropdown-btn .dropdown-menu {   display: none;
-        border-radius: 0;}
-        margin: -20px 0 0 0;
-        padding: 0;down-menu {
+    #menuMobile {
         display: none;
-        background-color: #a723ff; 0;
+    }
+
+    .dropdown-btn .dropdown-menu {
+        border-radius: 0;
+        margin: -20px 0 0 0;
+        padding: 0;
+        display: none;
+        background-color: #a723ff;
         font-size: 30px;
-        border: none;   display: none;
-    }    background-color: #a723ff;
-    : 30px;
+        border: none;
+    }
+    
     .dropdown-btn:hover .dropdown-menu {
         display: block;
     }
-        .dropdown-btn:hover .dropdown-menu {
-    .dropdown-btn .dropdown-content {block;
+    
+    .dropdown-btn .dropdown-content {
         color: #ffffff;
         padding: 20px 5px;
-        line-height: 0px;dropdown-btn .dropdown-content {
-        height: 30px;        color: #ffffff;
-    }x;
+        line-height: 0px;
+        height: 30px;
+    }
     
     #formButton {
         cursor:pointer;
-        width: 300px;   
-    }    #formButton {
+        width: 300px;
+    }
 
     .footerText {
         font-size: 30px;    
         font-weight: 650;
     }
-0px;    
-    .footerButtonImage {   font-weight: 650;
-        position: absolute;    }
+
+    .footerButtonImage {
+        position: absolute;
         width: 3.3vw;
-    }e {
+    }
 }
-   width: 3.3vw;
-@media only screen and (max-width: 900px) {    }
+
+@media only screen and (max-width: 900px) {
     #headerBackgroundVideo {
         width: 100%;
-        margin: 0;h: 900px) {
-        position: absolute;o {
+        margin: 0;
+        position: absolute;
         z-index: -1;
     }
-olute;
+
     #headerBackgroundImage {
         height: 30vw;
         margin: 0 0 0 20vw;
-    }headerBackgroundImage {
-    height: 30vw;
-    header {        in: 0 0 0 20vw;
+    }
+
+    header {        
         align-items: center;
         justify-content: center;
         font-weight: 800;
-        font-size: 8vw;   align-items: center;
-        line-height: 6vw;    justify-content: center;
-        height: 20vw;ht: 800;
+        font-size: 8vw;
+        line-height: 6vw;
+        height: 20vw;
         display: flex;
         flex-direction: column;
-        border-bottom: none;   height: 20vw;
-    }        display: flex;
-    ction: column;
-    #title { none;
+        border-bottom: none;
+    }
+    
+    #title {
         margin: 0 0 0 20px;
         display: table;
         text-wrap: nowrap;
-    }x;
+    }
     
-    #title span {;
+    #title span {
         display: table-cell;
         vertical-align: middle;
     }
-   display: table-cell;
-    #menuMobile {        vertical-align: middle;
+
+    #menuMobile {
         display: flex;
         align-content: center;
-        width: 100%;menuMobile {
-        margin: 0 -3vw 0 0;    display: flex;
-        font-weight: 700;t: center;
-        list-style-type: none;%;
-        line-height: 4vw;0 -3vw 0 0;
-        font-size: 4.3vw;: 700;
-        background-color: #a723ff;   list-style-type: none;
-        justify-content: start;        line-height: 4vw;
-    }.3vw;
-ff;
-    #menuMobileItem {: start;
+        width: 100%;
+        margin: 0 -3vw 0 0;
+        font-weight: 700;
+        list-style-type: none;
+        line-height: 4vw;
+        font-size: 4.3vw;
+        background-color: #a723ff;
+        justify-content: start;
+    }
+
+    #menuMobileItem {
         padding: 0;
     }
-        #menuMobileItem {
+    
     #menuMobile ul {
         margin: 0;
         flex: 1;
         padding: 0;
-    }   margin: 0;
-        flex: 1;
-    #menuMobile li {ding: 0;
+    }
+
+    #menuMobile li {
         vertical-align: middle;
         padding: 0.5vw;
-        list-style-type: none;    #menuMobile li {
-    }rtical-align: middle;
-;
+        list-style-type: none;
+    }
+
     #menuMobile p {
         display: table-cell;
         vertical-align: middle;
         padding: 0 0 5px 0;
-    }   display: table-cell;
-        vertical-align: middle;
-    #menu {g: 0 0 5px 0;
+    }
+
+    #menu {
         display: none;
     }
-#menu {
+
     main {
         display: flex;
         flex-direction: column;
-        background-color: #131313; main {
-        padding-top: 10px;lex;
-        justify-content: center;on: column;
-    }1313; 
-   padding-top: 10px;
-    .gallery {    justify-content: center;
+        background-color: #131313; 
+        padding-top: 10px;
+        justify-content: center;
+    }
+
+    .gallery {
         width: calc(100vw - 70px);
     }
     
-    .gallery .galleryPhoto {   width: calc(100vw - 70px);
-        width: 10vw;    }
+    .gallery .galleryPhoto {
+        width: 10vw;
     }
-    {
+    
     .gallery img {
-        width: 70vw;
-        justify-self: center;   
-
-
-
-
-
-
-
-
-
-
-
-
-}    }        font-weight: 650;        font-size: 4vw;        .footerText {    }        width: 200px;        cursor:pointer;    #formButton {        }    .gallery img {
         width: 70vw;
         justify-self: center;
     }
