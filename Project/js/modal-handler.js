@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Открытие окна регистрации
     openRegistrationButton.addEventListener('click', () => {
-        loginModal.hide();
-        registrationModal.show();
+        loginModal.hide(); // Закрываем окно входа
+        registrationModal.show(); // Открываем окно регистрации
     });
 
     // Обработка формы входа
