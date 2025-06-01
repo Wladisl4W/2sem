@@ -1,15 +1,15 @@
 <?php
 session_start();
 if (empty($_SESSION['login']) || empty($_SESSION['password'])) {
-    header('Location: register.php');
+    header('Location: ../index.php');
     exit();
 }
 
 $login = $_SESSION['login'];
 $password = $_SESSION['password'];
 
-// Удаляем пароль из сессии сразу после его извлечения
-unset($_SESSION['password']);
+// Удаляем логин и пароль из сессии сразу после их извлечения
+unset($_SESSION['login'], $_SESSION['password']);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -39,6 +39,5 @@ unset($_SESSION['password']);
             </div>
         </div>
     </div>
-    <?php session_destroy(); ?>
 </body>
 </html>

@@ -49,13 +49,12 @@ try {
         $stmt->execute([$applicationId, $languageId]);
     }
 
-    http_response_code(201);
-    echo json_encode([
-        'status' => 'success',
-        'login' => $login,
-        'password' => $password,
-        'profile_url' => "/profile.php?id=$applicationId"
-    ]);
+    // Сохраняем логин и пароль в сессии для отображения на странице success.php
+    $_SESSION['login'] = $login;
+    $_SESSION['password'] = $password;
+
+    // Перенаправляем на страницу success.php
+    header("Location: success.php");
     exit();
 } catch (PDOException $e) {
     error_log('Database error: ' . $e->getMessage());
