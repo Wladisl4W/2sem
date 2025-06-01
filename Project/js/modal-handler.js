@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Открытие окна регистрации
     openRegistrationButton.addEventListener('click', () => {
-        loginModal.hide(); // Закрываем окно входа
-        registrationModal.show(); // Открываем окно регистрации
+        loginModal.hide();
+        registrationModal.show();
     });
 
     // Обработка формы входа
@@ -26,18 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(data),
             });
 
-            if (response.ok) {
-                const result = await response.json();
-                if (result.success) {
-                    loginModal.hide();
-                    editModal.show();
-                    // Заполнить форму редактирования данными пользователя
-                    populateEditForm(result.userData);
-                } else {
-                    alert('Ошибка входа: ' + result.message);
-                }
+            const result = await response.json();
+            if (result.success) {
+                loginModal.hide();
+                editModal.show();
+                populateEditForm(result.userData);
             } else {
-                alert('Ошибка сервера. Попробуйте позже.');
+                alert('Ошибка входа: ' + result.message);
             }
         } catch (error) {
             alert('Ошибка сети. Попробуйте позже.');
