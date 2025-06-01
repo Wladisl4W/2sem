@@ -1,6 +1,6 @@
 ﻿<?php
 session_start();
-include("/home/wladisl4w/Desktop/2sem/db.php");
+include("../db.php");
 
 $error = null;
 
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <main>
-        <button type="button" class="btn formOpenButton" id="showFormBtn" data-bs-toggle="modal" data-bs-target="#modalForm">Войти</button>
+        <button type="button" class="btn formOpenButton" id="showFormBtn" data-bs-toggle="modal" data-bs-target="#modalForm"></button>
         <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
