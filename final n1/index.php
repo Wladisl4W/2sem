@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main>
         <button type="button" class="btn formOpenButton" id="showFormBtn" data-bs-toggle="modal" data-bs-target="#modalForm"></button>
-        <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static" <?= !empty($error) ? 'style="display:block;"' : '' ?>>
+        <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static" <?= !empty($error) ? 'data-bs-show="true"' : '' ?>>
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center form-head" style="background-color: #131313;">
