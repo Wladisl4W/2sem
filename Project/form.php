@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
-include("backend/validation.php");
 
 function getValue($name) {
     return htmlspecialchars($_SESSION['values'][$name] ?? '');
