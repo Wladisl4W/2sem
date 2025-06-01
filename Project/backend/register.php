@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['password'] = $password;
 
         // Редирект на страницу success.php
-        header('Location: ../success.php');
+        header('Location: success.php'); // Убираем ../, так как success.php находится в папке backend
         exit();
     } catch (PDOException $e) {
         error_log('Database error: ' . $e->getMessage());
