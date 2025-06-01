@@ -144,9 +144,11 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Редактирование данных</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
+
     <div class="container-wide">
         <div class="header-box">Редактирование данных</div>
         <?php if (!empty($success)): ?>
@@ -207,8 +209,7 @@ try {
             <button type="submit" name="logout" class="btn btn-danger w-100">Выйти</button>
         </form>
     </div>
-    <?php
-    unset($_SESSION['edit_errors']);
-    ?>
+
+    <?php include '../includes/footer.php'; ?>
 </body>
 </html>
