@@ -1,32 +1,29 @@
 <?php
+header('Content-Type: application/json');
 session_start();
-include("../../db.php"); // Подключаем db.php из папки выше
-include("../../validation.php"); // Подключаем validation.php из папки выше
+include("../../db.php");
 
-$error = null;
+$input = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (empty($_POST['login']) || empty($_POST['password'])) {
-        $error = 'Пожалуйста, заполните оба поля.';
+if (empty($input['login']) || empty($input['password'])) {
+    echo json_encode(['success' => false, 'message' => 'Логин и пароль обязательны.']);
+    exit();
+}
+
+try {
+    $db = getDatabaseConnection();
+    $stmt = $db->prepare("SELECT * FROM users WHERE user_login = ?");
+    $stmt->execute([$input['login']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($input['password'], $user['password_hash'])) {
+        $_SESSION['user_id'] = $user['user_id'];
+        echo json_encode(['success' => true, 'userData' => $user]);
     } else {
-        try {
-            $db = getDatabaseConnection();
-
-            $stmt = $db->prepare("SELECT user_id, password_hash FROM users WHERE user_login = ?");
-            $stmt->execute([$_POST['login']]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user && password_verify($_POST['password'], $user['password_hash'])) {
-                $_SESSION['user_id'] = intval($user['user_id']);
-                header('Location: ../edit.php');
-                exit();
-            } else {
-                $error = 'Неверный логин или пароль.';
-            }
-        } catch (PDOException $e) {
-            error_log('Database error: ' . $e->getMessage());
-            $error = 'Ошибка базы данных. Пожалуйста, попробуйте позже.';
-        }
+        echo json_encode(['success' => false, 'message' => 'Неверный логин или пароль.']);
     }
+} catch (PDOException $e) {
+    error_log('Database error: ' . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Ошибка сервера.']);
 }
 ?>
