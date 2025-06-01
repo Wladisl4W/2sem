@@ -93,19 +93,25 @@
     <main>
         <button type="button" class="btn formOpenButton" id="showFormBtn" data-bs-toggle="modal" data-bs-target="#modalForm"></button>
         <div class="modal modal-lg" id="modalForm" data-bs-backdrop="static">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center form-head" style="background-color: #131313;">
-                        <h1>Вход</h1>
+                        <h1 class="text-white">Вход</h1>
                     </div>
                     <div class="modal-body" style="background-color: #131313;">
-                        <form id="loginForm" method="post" action="back/login.php" class="border p-4 rounded bg-dark">
+                        <!-- Сообщение об ошибке -->
+                        <div id="loginError" class="alert alert-danger text-center d-none" role="alert">
+                            Неверный логин или пароль.
+                        </div>
+
+                        <!-- Форма входа -->
+                        <form id="loginForm" class="p-4">
                             <div class="mb-3">
-                                <label for="login" class="form-label">Логин:</label>
+                                <label for="login" class="form-label text-white">Логин:</label>
                                 <input type="text" id="login" name="login" class="form-control" placeholder="Введите ваш логин" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Пароль:</label>
+                                <label for="password" class="form-label text-white">Пароль:</label>
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Введите ваш пароль" required>
                             </div>
                             <div class="d-flex justify-content-between">
