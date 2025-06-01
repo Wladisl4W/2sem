@@ -99,13 +99,7 @@
                         <h1 class="text-white">Вход</h1>
                     </div>
                     <div class="modal-body" style="background-color: #131313;">
-                        <!-- Сообщение об ошибке -->
-                        <div id="loginError" class="alert alert-danger text-center d-none" role="alert">
-                            Неверный логин или пароль.
-                        </div>
-
-                        <!-- Форма входа -->
-                        <form id="loginForm" class="p-4">
+                        <form id="loginForm" method="post" action="back/login.php" class="p-4">
                             <div class="mb-3">
                                 <label for="login" class="form-label text-white">Логин:</label>
                                 <input type="text" id="login" name="login" class="form-control" placeholder="Введите ваш логин" required>
@@ -115,13 +109,13 @@
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Введите ваш пароль" required>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Войти</button>
-                                <a href="back/form.php" class="btn btn-secondary">Регистрация</a>
+                                <button type="submit" class="btn btn-primary w-45">Войти</button>
+                                <a href="back/form.php" class="btn btn-secondary w-45">Регистрация</a>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer" style="background-color: #131313;">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
             </div>
