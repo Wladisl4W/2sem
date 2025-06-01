@@ -1,7 +1,7 @@
 <?php
 
 function getDatabaseConnection() {
-    include("../../../pass.php");
+    include("/home/u68762/pass.php"); // Используем абсолютный путь к pass.php
 
     try {
         return new PDO("mysql:host=localhost;dbname=$dbname", $user, $pass, [
