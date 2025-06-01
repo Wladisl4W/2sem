@@ -32,7 +32,7 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
     <header>
         <div id="title">
             <span>
-                <a href="./index.html">
+                <a href="../index.php">
                     Поддержка сайтов<br>на костылях
                 </a>
             </span>
