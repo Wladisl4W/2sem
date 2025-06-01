@@ -1,15 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    const registrationModal = new bootstrap.Modal(document.getElementById('registrationModal'));
-    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-
     const loginForm = document.getElementById('loginForm');
     const openRegistrationButton = document.getElementById('openRegistration');
 
-    // Открытие окна регистрации
+    // Перенаправление на страницу регистрации
     openRegistrationButton.addEventListener('click', () => {
-        loginModal.hide();
-        registrationModal.show();
+        window.location.href = 'backend/register.php'; // Переход на страницу регистрации
     });
 
     // Обработка формы входа
@@ -28,9 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await response.json();
             if (result.success) {
-                loginModal.hide();
-                editModal.show();
-                populateEditForm(result.userData);
+                window.location.href = 'backend/edit.php'; // Переход на страницу редактирования
             } else {
                 alert('Ошибка входа: ' + result.message);
             }
@@ -38,13 +31,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Ошибка сети. Попробуйте позже.');
         }
     });
-
-    // Заполнение формы редактирования
-    function populateEditForm(userData) {
-        const editForm = document.getElementById('editForm');
-        for (const [key, value] of Object.entries(userData)) {
-            const input = editForm.querySelector(`[name="${key}"]`);
-            if (input) input.value = value;
-        }
-    }
 });

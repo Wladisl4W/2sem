@@ -18,7 +18,7 @@ try {
 
     if ($user && password_verify($input['password'], $user['password_hash'])) {
         $_SESSION['user_id'] = $user['application_id'];
-        echo json_encode(['success' => true, 'userData' => $user]);
+        echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Неверный логин или пароль.']);
     }
