@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
-include("db.php");
-include("validation.php");
+include("../../db.php"); // Подключаем db.php из папки выше
+include("../../validation.php"); // Подключаем validation.php из папки выше
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = validateFormData($_POST);

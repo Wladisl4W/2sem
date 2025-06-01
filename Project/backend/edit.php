@@ -1,7 +1,7 @@
 <?php
 session_start();
-include("db.php");
-include("validation.php");
+include("../../db.php"); // Подключаем db.php из папки выше
+include("../../validation.php"); // Подключаем validation.php из папки выше
 
 if (empty($_SESSION['user_id'])) {
     header('Location: ../login.php');

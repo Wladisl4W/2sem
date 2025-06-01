@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("db.php");
+include("../../db.php"); // Подключаем db.php из папки выше
+include("../../validation.php"); // Подключаем validation.php из папки выше
 
 $error = null;
 
