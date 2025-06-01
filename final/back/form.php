@@ -24,10 +24,10 @@ $languages = isset($_SESSION['values']['lang']) ? $_SESSION['values']['lang'] : 
 <body>
 
 <video id="headerBackgroundVideo" loop="loop" autoplay="autoplay" preload="auto" muted>
-        <source src="./images/header_background.mp4"></source>
-        <source src="./images/header_background.webm" type="video/webm"></source>
+        <source src="../images/header_background.mp4"></source>
+        <source src="../images/header_background.webm" type="video/webm"></source>
     </video>
-    <img id="headerBackgroundImage" src="./images/header_kostyl.png">
+    <img id="headerBackgroundImage" src="../images/header_kostyl.png">
     
     <header>
         <div id="title">
