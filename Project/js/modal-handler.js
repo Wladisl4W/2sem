@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Обработка формы входа
     if (loginForm) {
+        console.log('Форма входа найдена.');
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
