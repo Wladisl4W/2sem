@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
 
     $_SESSION = [];
     if (session_destroy()) {
-        header('Location: ../index.html');
+        header('Location: ../index.php');
         exit();
     } else {
         $logoutError = 'Не удалось завершить сессию. Попробуйте снова.';
